@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <link href="styles.css" rel="stylesheet"/>
+</head>
+<body xmlns:th="http://www.thymeleaf.org" style="width: 100vw; margin-left: auto; margin-right: auto">
+  <div style="width: 300px; margin: 0 auto; margin-top: 100px;">
+    <canvas id="canvas" width="280" height="280" style="border: 1px solid; margin-left: 10px; margin-right: 10px"></canvas>
+    <br/>
+    <button style="margin-left:80px" id="clear">Clear Canvas</button>
+    <button id="send">Classify</button>
+
+
+    <br/>
+    <div id="predictions" th:fragment="predictions" style="margin-left: 50px;">
+    	<span th:each="prediction : ${predictions}">
+			<p th:text="${'label: ' + prediction.label + ',  score: ' + prediction.percentage}"></p>
+    	</span>
+    </div>
+    <br/><br/><br/>
+    <script type="text/javascript" src="mnist/draw.js"></script>
+    <div th:fragment="footer" style="display:block;margin:auto"><img src="/duke/banner.png" alt="JTech Ordina 2019" style="display:block;margin:auto"/></div>
+  </div>
+</body>

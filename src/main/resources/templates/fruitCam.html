@@ -1,0 +1,121 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="styles.css" rel="stylesheet"/>
+    <link href="jquery-ui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/avisi/opencv.js"></script>
+    <script type="text/javascript" src="/avisi/utils.js"></script>
+</head>
+<body>
+<div id="container" style="width: 800px; display:block; margin-left: auto; margin-right: auto; margin-top: 20px">
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">File upload</a></li>
+            <li><a href="#tabs-2">Camera</a></li>
+        </ul>
+        <div id="tabs-1">
+                <table>
+                    <tr>
+                        <td>File to upload:</td>
+                        <td><input id="file" type="file" name="file"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input id="upload" type="submit" value="Upload"/></td>
+                    </tr>
+                </table>
+            <div id="filePredictions" th:fragment="filePredictions" style="margin-left: auto; margin-right: auto; margin-top: 50px">
+                <table style="text-align: center;margin-top: 20px;margin-left: auto; margin-right: auto;">
+                    <tr th:if="${predictions != null}" th:each="p : ${predictions}">
+                        <td height="80px">
+                            <p th:text="${p.percentage}" style="color:black"></p>
+                        </td>
+                        <td height="80px">
+                            <p th:if="${p.percentage &gt; 0.5}" th:text="${p.label + ' detected'}" style="color:black"></p>
+
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+        </div>
+        <div id="tabs-2">
+            <table style="margin: 0 auto;">
+                <tr>
+                    <th style="color:white">Live Feed:</th>
+                    <th style="color:white">Testing image:</th>
+                </tr>
+                <tr>
+                    <td>
+                        <video id="video" width="320" height="240" autoplay="true"></video>
+                    </td>
+                    <td>
+                        <canvas id="canvas" width="320" height="240"></canvas>
+                    </td>
+                </tr>
+            </table>
+            <div id="cameraPredictions" th:fragment="cameraPredictions" style="margin-left: auto; margin-right: auto; margin-top: 50px">
+                <table style="text-align: center;margin-top: 20px;margin-left: auto; margin-right: auto;">
+                    <tr th:if="${predictions != null}" th:each="p : ${predictions}">
+                        <td height="80px">
+                            <p th:text="${p.percentage}" style="color:black"></p>
+                        </td>
+                        <td height="80px">
+                            <p th:if="${p.percentage &gt; 0.5}" th:text="${p.label + ' detected'}" style="color:black"></p>
+
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" th:src="@{/avisi/webcam.js}"/>
+<script type="text/javascript" >
+    var handle;
+  $('#tabs' ).tabs({
+    activate: function( event, ui ) {
+      console.log(ui);
+      console.log(ui.newTab.index());
+      if (ui.newTab.index() == 0) {
+        shutdownCamera();
+        clearTimeout(handle);
+        handle = null;
+      }
+      if (ui.newTab.index() == 1) {
+        getAccessToTheCamera();
+        handle = setTimeout(processVideo, 200);
+      }
+    },
+
+  });
+  $('#upload').on('click', function(){
+    var data = new FormData();
+    data.append('image', $('#file').prop('files')[0]);
+
+    $.ajax({
+      type: 'POST',
+      processData: false, // important
+      contentType: false, // important
+      data: data,
+      url: '/upload/file',
+      dataType : 'text',
+      success: function(predictions){
+        console.log(predictions);
+        $('#filePredictions').html(predictions);
+
+      }
+    });
+  });
+
+</script>
+</body>
+</html>
