@@ -1,9 +1,6 @@
 package nl.avisi.labs.deeplearning.transferlearning.trainers;
 
-import static org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD;
-
-import java.io.File;
-import java.io.IOException;
+import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.FruitDataSetIterator;
 
 import org.deeplearning4j.common.resources.DL4JResources;
 import org.deeplearning4j.eval.Evaluation;
@@ -22,11 +19,15 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.learning.config.Nesterovs;
 import org.slf4j.Logger;
 
-import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.FruitDataSetIterator;
+import java.io.File;
+import java.io.IOException;
+
+import static org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD;
 
 public class FruitTransferLearningTrainer {
     // sets the DL4J model-download folder to a local folder instead of default user home
     static {
+        DL4JResources.setBaseDownloadURL("https://dl4jdata.blob.core.windows.net/");
         DL4JResources.setBaseDirectory(new File("dl4j-models/"));
     }
 
