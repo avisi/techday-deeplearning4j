@@ -47,7 +47,7 @@ public class FruitDataSetIterator {
     }
 
     public static List<String> getLabels(){
-        return Arrays.asList( "banana", "apple");
+        return Arrays.asList( "banana", "no_banana");
     }
 
     public static void setup(int batchSizeArg, int trainPerc) {
