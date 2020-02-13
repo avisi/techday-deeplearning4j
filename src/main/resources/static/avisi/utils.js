@@ -20,8 +20,8 @@ function Utils(errorOutputId) { // eslint-disable-line no-unused-vars
         request.send();
     };
 
-    this.loadImageToCanvas = function(url, cavansId) {
-        let canvas = document.getElementById(cavansId);
+    this.loadImageToCanvas = function(url, canvasId) {
+        let canvas = document.getElementById(canvasId);
         let ctx = canvas.getContext('2d');
         let img = new Image();
         img.crossOrigin = 'anonymous';

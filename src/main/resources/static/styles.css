@@ -36,3 +36,10 @@ video {
 	background-size: fill;
 }
 
+.score {
+	text-align: left;
+}
+
+.decision {
+	text-align: left;
+}

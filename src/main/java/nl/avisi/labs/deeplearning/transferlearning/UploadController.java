@@ -21,12 +21,13 @@ import nl.avisi.labs.deeplearning.transferlearning.storage.StorageService;
 public class UploadController {
 
     private final StorageService storageService;
-    private FruitClassifier flowerClassifier;
+
+    private DataClassifier classifier;
 
     @Autowired
-    public UploadController(StorageService storageService, FruitClassifier imageClassifier) {
+    public UploadController(StorageService storageService, FruitClassifier fruitClassifier) {
         this.storageService = storageService;
-        this.flowerClassifier = imageClassifier;
+        this.classifier = fruitClassifier;
     }
 
     @GetMapping("/")
@@ -43,7 +44,7 @@ public class UploadController {
         Resource image = storageService.loadAsResource("image.jpg");
         List<Prediction> predictions = null;
         try {
-            predictions = flowerClassifier.classify(image.getInputStream());
+            predictions = classifier.classify(image.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +65,7 @@ public class UploadController {
         Resource image = storageService.loadAsResource(file.getOriginalFilename());
         List<Prediction> predictions = null;
         try {
-            predictions = flowerClassifier.classify(image.getInputStream());
+            predictions = classifier.classify(image.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }

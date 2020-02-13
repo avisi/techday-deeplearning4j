@@ -20,4 +20,18 @@ On a MacBook we used Java 11.0.3 with no such problem.
 
 * Upload an image file or take a picture with your laptop's camera
 
+* Handson
+
+Three different applications
+
+Three branches 
+
+- Runnable jar met bijv. bananenidee, dat kun je runnen
+
+- Implementatie van dataset iterator (obv de hints) en implementatie van de transfer learning config (laatste x layers vervangen)
+
+- Dataset definieren (eigen dataset) of ingaan op de vraag waarom het model een bepaald resultaat oplevert
+
+
+
 

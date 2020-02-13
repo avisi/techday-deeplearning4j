@@ -1,8 +1,10 @@
 package nl.avisi.labs.deeplearning.transferlearning.trainers;
 
+import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.DefaultDataSetIterator;
 import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.FruitDataSetIterator;
 import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.TransferLearningIterator;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.deeplearning4j.common.resources.DL4JResources;
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.distribution.NormalDistribution;
@@ -25,14 +27,14 @@ import java.io.IOException;
 
 import static org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD;
 
-public class FruitTransferLearningTrainer {
+public class BasicTrainer {
     // sets the DL4J model-download folder to a local folder instead of default user home
     static {
         DL4JResources.setBaseDownloadURL("https://dl4jdata.blob.core.windows.net/");
         DL4JResources.setBaseDirectory(new File("dl4j-models/"));
     }
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(FruitTransferLearningTrainer.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(BasicTrainer.class);
 
     private static final int NUM_CLASSES = 2; //Banana / No_banana
     private static final long SEED = 12345; //Should normally be random, but is set in this case to be get reproducible results
@@ -43,20 +45,17 @@ public class FruitTransferLearningTrainer {
     public static void main(String[] args) throws IOException {
 
         log.info("\n\nLoading org.deeplearning4j.transferlearning.vgg16...\n\n");
-        // ZooModels are pre-defined networks; the model is downloaded from the specified location
+
+        // ZooModels are pre-defined networks; the model is downloaded
+
         ZooModel zooModel = VGG16.builder().build();
 
         ComputationGraph vgg16 = (ComputationGraph) zooModel.initPretrained();
-
         log.info(vgg16.summary());
         //create a new outputlayer for our own specific use case:
-        OutputLayer outputLayer = new OutputLayer.Builder(NEGATIVELOGLIKELIHOOD)//
-                                                                                .nIn(4096)
-                                                                                .nOut(NUM_CLASSES)
-                                                                                .weightInit(WeightInit.DISTRIBUTION)
-                                                                                .dist(getDist())
-                                                                                .activation(Activation.SOFTMAX)//
-                                                                                .build();
+
+        //TODO
+        OutputLayer outputLayer = createOutputLayer();
         ComputationGraph vgg16Transfer = new TransferLearning.GraphBuilder(vgg16)//
                                                                                  .fineTuneConfiguration(getFineTuneConfiguration())//
                                                                                  .setFeatureExtractor("fc2") //the specified layer and below are "frozen"
@@ -64,12 +63,10 @@ public class FruitTransferLearningTrainer {
                                                                                  .removeVertexKeepConnections("predictions") //replace the functionality of the final layer
                                                                                  .addLayer("predictions", outputLayer, "fc2").build();
 
-        log.info(vgg16Transfer.summary());
-
-        TransferLearningIterator iterator = new FruitDataSetIterator(BATCH_SIZE, TRAIN_PERC);
-        iterator.setup();
-        DataSetIterator trainIter = iterator.getTrainIterator();
-        DataSetIterator testIter = iterator.getTestIterator();
+        TransferLearningIterator transferLearningIterator = new DefaultDataSetIterator(BATCH_SIZE, TRAIN_PERC);
+        transferLearningIterator.setup();
+        DataSetIterator trainIter = transferLearningIterator.getTrainIterator();
+        DataSetIterator testIter = transferLearningIterator.getTestIterator();
 
         Evaluation eval = vgg16Transfer.evaluate(testIter);
         log.info("Eval stats BEFORE fit....." + eval.stats() + "\n");
@@ -90,7 +87,11 @@ public class FruitTransferLearningTrainer {
         }
         File locationToSave = new File("FruitModel.zip");
         ModelSerializer.writeModel(vgg16Transfer, locationToSave, false);
-        ModelSerializer.addObjectToFile(locationToSave, "labels", iterator.getLabels());
+        ModelSerializer.addObjectToFile(locationToSave, "labels", transferLearningIterator.getLabels());
+    }
+
+    private static OutputLayer createOutputLayer() {
+        throw new NotImplementedException("Fix me");
     }
 
     @NotNull

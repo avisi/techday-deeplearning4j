@@ -9,6 +9,7 @@
 </head>
 <body>
 <div id="container" style="width: 800px; display:block; margin-left: auto; margin-right: auto; margin-top: 20px">
+    <div id="errorContainer"/>
     <div id="tabs">
         <ul>
             <li><a href="#tabs-1">File upload</a></li>
@@ -23,15 +24,24 @@
                     <tr>
                         <td></td>
                         <td><input id="upload" type="submit" value="Upload"/></td>
+                        <td>
+                            <canvas id="fileCanvas" width="320" height="240"></canvas>
+                        </td>
                     </tr>
                 </table>
             <div id="filePredictions" th:fragment="filePredictions" style="margin-left: auto; margin-right: auto; margin-top: 50px">
                 <table style="text-align: center;margin-top: 20px;margin-left: auto; margin-right: auto;">
+                    <thead>
+                    <tr>
+                        <th class="score">Score</th>
+                        <th class="decision">Decision</th>
+                    </tr>
+                    </thead>
                     <tr th:if="${predictions != null}" th:each="p : ${predictions}">
-                        <td height="80px">
+                        <td height="80px" class="score">
                             <p th:text="${p.percentage}" style="color:black"></p>
                         </td>
-                        <td height="80px">
+                        <td height="80px" class="decision">
                             <p th:if="${p.percentage &gt; 0.5}" th:text="${p.label + ' detected'}" style="color:black"></p>
 
                         </td>
@@ -45,7 +55,7 @@
         <div id="tabs-2">
             <table style="margin: 0 auto;">
                 <tr>
-                    <th style="color:white">Live Feed:</th>
+                    <th style="color:white">Camera feed:</th>
                     <th style="color:white">Testing image:</th>
                 </tr>
                 <tr>
@@ -100,6 +110,10 @@
   $('#upload').on('click', function(){
     var data = new FormData();
     data.append('image', $('#file').prop('files')[0]);
+      let imgUrl = URL.createObjectURL($('#file').prop('files')[0]);
+      let utils = new Utils('errorContainer');
+      utils.loadImageToCanvas(imgUrl, 'fileCanvas');
+
 
     $.ajax({
       type: 'POST',

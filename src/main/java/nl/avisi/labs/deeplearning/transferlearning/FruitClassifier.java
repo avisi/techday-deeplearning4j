@@ -16,19 +16,19 @@ import org.springframework.stereotype.Component;
 import nl.avisi.labs.deeplearning.transferlearning.model.Prediction;
 
 @Component
-class FruitClassifier {
+class FruitClassifier implements DataClassifier {
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
     private static final int CHANNELS = 3;
-    private ComputationGraph dukeComputationGraph;
+    private ComputationGraph computationGraph;
     private NativeImageLoader nativeImageLoader;
     private List<String> labels;
 
     FruitClassifier() {
         try {
-            File dukeComputationGraphFile = new File("FruitModel.zip");
-            dukeComputationGraph = ModelSerializer.restoreComputationGraph("FruitModel.zip");
-            labels = ModelSerializer.getObjectFromFile(dukeComputationGraphFile, "labels");
+            File graphConfigurationFile = new File("FruitModel.zip");
+            computationGraph = ModelSerializer.restoreComputationGraph("FruitModel.zip");
+            labels = ModelSerializer.getObjectFromFile(graphConfigurationFile, "labels");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,7 +41,7 @@ class FruitClassifier {
      * @param inputStream
      * @return
      */
-    ArrayList<Prediction> classify(InputStream inputStream) {
+    public List<Prediction> classify(InputStream inputStream) {
 
         INDArray image = loadImage(inputStream);
 
@@ -49,7 +49,7 @@ class FruitClassifier {
 
         INDArray output = processImage(image);
 
-        ArrayList<Prediction> predictions = new ArrayList<Prediction>();
+        List<Prediction> predictions = new ArrayList<Prediction>();
         for (int i = 0; i < labels.size(); i++) {
             predictions.add(new Prediction(labels.get(i), output.getFloat(i)));
         }
@@ -63,7 +63,7 @@ class FruitClassifier {
      * @return
      */
     private INDArray processImage(final INDArray image) {
-        INDArray[] output = dukeComputationGraph.output(false, image);
+        INDArray[] output = computationGraph.output(false, image);
         return output[0];
     }
 
