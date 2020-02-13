@@ -1,12 +1,8 @@
 package nl.avisi.labs.deeplearning.transferlearning;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+
+import nl.avisi.labs.deeplearning.transferlearning.model.Prediction;
 
 import org.datavec.image.loader.NativeImageLoader;
-import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
@@ -14,19 +10,22 @@ import org.nd4j.linalg.dataset.api.preprocessor.VGG16ImagePreProcessor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import nl.avisi.labs.deeplearning.transferlearning.model.Prediction;
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
-@Profile("fruit")
-class FruitClassifier extends DataClassifier {
+@Profile("tosti")
+class TostiClassifier extends DataClassifier {
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
     private static final int CHANNELS = 3;
 
-    FruitClassifier() {
+    TostiClassifier() {
         try {
-            File graphConfigurationFile = new File("FruitModel.zip");
-            computationGraph = ModelSerializer.restoreComputationGraph("FruitModel.zip");
+            File graphConfigurationFile = new File("TostiModel.zip");
+            computationGraph = ModelSerializer.restoreComputationGraph("TostiModel.zip");
             labels = ModelSerializer.getObjectFromFile(graphConfigurationFile, "labels");
         } catch (Exception e) {
             e.printStackTrace();

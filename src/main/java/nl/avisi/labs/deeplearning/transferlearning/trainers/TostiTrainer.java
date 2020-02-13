@@ -3,22 +3,17 @@ package nl.avisi.labs.deeplearning.transferlearning.trainers;
 import nl.avisi.labs.deeplearning.transferlearning.datahelpers.FruitDataSetIterator;
 import nl.avisi.labs.deeplearning.transferlearning.datahelpers.TransferLearningIterator;
 
-import org.deeplearning4j.common.resources.DL4JResources;
 import org.deeplearning4j.eval.Evaluation;
-import org.deeplearning4j.nn.conf.distribution.NormalDistribution;
 import org.deeplearning4j.nn.conf.layers.Layer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.graph.ComputationGraph;
-import org.deeplearning4j.nn.transferlearning.FineTuneConfiguration;
 import org.deeplearning4j.nn.transferlearning.TransferLearning;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.util.ModelSerializer;
 import org.deeplearning4j.zoo.ZooModel;
 import org.deeplearning4j.zoo.model.VGG16;
-import org.jetbrains.annotations.NotNull;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
-import org.nd4j.linalg.learning.config.Nesterovs;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -29,15 +24,15 @@ import groovy.util.logging.Log4j;
 import static org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD;
 
 @Log4j
-public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(FruitTransferLearningTrainer.class);
+public class TostiTrainer extends BaseTransferLearningTrainer {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(TostiTrainer.class);
 
-    private static final int NUM_CLASSES = 2; //Banana / No_banana
+    private static final int NUM_CLASSES = 2; //Tosti / No_tosti
     private static final int TRAIN_PERC = 80; // Percentage of images that should be included in the trainings set, the rest is included in the test set
     private static final int BATCH_SIZE = 5;
 
     public static void main(String[] args) throws IOException {
-        new FruitTransferLearningTrainer().train();
+        new TostiTrainer().train();
 
     }
 
@@ -100,7 +95,7 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
 
     @Override
     protected String getModelname() {
-        return "FruitModel";
+        return "TostiModel";
     }
 
     @Override
