@@ -28,7 +28,7 @@ public class TostiDataSetIterator extends TransferLearningIterator {
     }
 
     public String getDataSetFolder() {
-        return "/datasets/fruit/";
+        return "/datasets/tostis/";
     }
 
     /**
@@ -36,7 +36,7 @@ public class TostiDataSetIterator extends TransferLearningIterator {
      * @return
      */
     public List<String> getLabels() {
-        return Arrays.asList("banana", "no_banana");
+        return Arrays.asList("no_tosti", "tosti");
     }
 
 }

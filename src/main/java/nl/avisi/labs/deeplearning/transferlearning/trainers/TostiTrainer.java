@@ -1,6 +1,7 @@
 package nl.avisi.labs.deeplearning.transferlearning.trainers;
 
 import nl.avisi.labs.deeplearning.transferlearning.datahelpers.FruitDataSetIterator;
+import nl.avisi.labs.deeplearning.transferlearning.datahelpers.TostiDataSetIterator;
 import nl.avisi.labs.deeplearning.transferlearning.datahelpers.TransferLearningIterator;
 
 import org.deeplearning4j.eval.Evaluation;
@@ -58,7 +59,7 @@ public class TostiTrainer extends BaseTransferLearningTrainer {
                                                     // the other layers are trained
                                                     .removeVertexKeepConnections("predictions") //replace the functionality of the final layer
                                                     .addLayer("predictions", this.createOutputLayer(), "fc2").build();
-            iterator = new FruitDataSetIterator(BATCH_SIZE, TRAIN_PERC);
+            iterator = new TostiDataSetIterator(BATCH_SIZE, TRAIN_PERC);
             iterator.setup();
             DataSetIterator trainIter = iterator.getTrainIterator();
             DataSetIterator testIter = iterator.getTestIterator();
