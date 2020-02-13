@@ -34,4 +34,13 @@ Three branches
 
 
 
+* Running the fruit recognition application
+- Run the FruitTransferLearningTrainer application
+- Run the FruitClassifier application by running the Application with Spring Boot profile "fruit"
 
+
+* Creating your own classifier:
+- Implement the TransferLearningIterator interface
+- Extend the BaseTransferLearningTrainer class  
+- Extend the DataClassifier class as a Spring Boot @Component and assign it a unique @Profile 
+- 

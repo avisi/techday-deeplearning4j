@@ -25,9 +25,9 @@ public class UploadController {
     private DataClassifier classifier;
 
     @Autowired
-    public UploadController(StorageService storageService, FruitClassifier fruitClassifier) {
+    public UploadController(StorageService storageService, DataClassifier dataClassifier) {
         this.storageService = storageService;
-        this.classifier = fruitClassifier;
+        this.classifier = dataClassifier;
     }
 
     @GetMapping("/")
