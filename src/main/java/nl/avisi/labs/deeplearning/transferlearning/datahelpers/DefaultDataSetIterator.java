@@ -1,8 +1,7 @@
-package nl.avisi.labs.deeplearning.transferlearning.dataHelpers;
+package nl.avisi.labs.deeplearning.transferlearning.datahelpers;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class DefaultDataSetIterator extends TransferLearningIterator {

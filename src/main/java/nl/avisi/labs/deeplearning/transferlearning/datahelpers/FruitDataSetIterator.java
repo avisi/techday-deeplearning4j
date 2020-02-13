@@ -1,4 +1,4 @@
-package nl.avisi.labs.deeplearning.transferlearning.dataHelpers;
+package nl.avisi.labs.deeplearning.transferlearning.datahelpers;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +19,10 @@ public class FruitDataSetIterator extends TransferLearningIterator {
         super(batchSize, trainPercentage);
     }
 
+    /**
+     * The network must decide whether an image is a banana or not, hence 2 classes
+     * @return
+     */
     public int getNumberOfClasses() {
         return 2;
     }
@@ -27,6 +31,10 @@ public class FruitDataSetIterator extends TransferLearningIterator {
         return "/datasets/fruit/";
     }
 
+    /**
+     * An image contains either a banana or not
+     * @return
+     */
     public List<String> getLabels() {
         return Arrays.asList("banana", "no_banana");
     }

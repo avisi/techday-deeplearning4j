@@ -1,4 +1,4 @@
-package nl.avisi.labs.deeplearning.transferlearning.dataHelpers;
+package nl.avisi.labs.deeplearning.transferlearning.datahelpers;
 
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Random;
 
-public abstract class AbstractLearningIterator {
+public abstract class TransferLearningIterator {
 
     private static final Random rng = new Random(1663);
 
@@ -25,24 +25,46 @@ public abstract class AbstractLearningIterator {
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
     private static final int CHANNELS = 3;
-    private static final int NUM_CLASSES = 2;
     private InputSplit trainData, testData;
 
     private int batchSize;
     private int trainPercentage;
 
-    AbstractLearningIterator(int batchSize, int trainPercentage) {
+    /**
+     * the
+     * @param batchSize the number of files to read per batch
+     * @param trainPercentage the percentage of data reserved for training purposes. The remainder will be used for testing
+     */
+    TransferLearningIterator(int batchSize, int trainPercentage) {
         this.batchSize = batchSize;
         this.trainPercentage = trainPercentage;
     }
 
     private ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
 
+    /**
+     * The number of different classes the network must identify
+     * @return the number of different classes the network must identify
+     */
     abstract int getNumberOfClasses();
 
+    /**
+     * The labels which the network can assign to the outcome. The length of this list must
+     * be in synch with the number of classes e.g. if the number of classes is 2 then the
+     * list of labels must have two items.
+     * The labels must be alphabetically sorted (i.e. match the order of subfolders)
+     * @return a list of lables
+     */
+    public abstract List<String> getLabels();
+    /**
+     * The folder on the classpath where the dataset can be found.
+     * The dataset must contain one subfolder for each class to distinguish
+     * e.g. if number of classes is 2 then the dataset folder must have 2 subfolders.
+     * Each subfolder will only be searched for images.
+     * @return the number of different classes the network must identify
+     */
     abstract String getDataSetFolder();
 
-    public abstract List<String> getLabels();
 
     public void setup() {
         File parentDir = null;
@@ -58,7 +80,9 @@ public abstract class AbstractLearningIterator {
             throw new IllegalArgumentException("Percentage of data set aside for training has to be less than 100%. Test percentage = 100 - training percentage, has to be greater than 0");
         }
         InputSplit[] filesInDirSplit = filesInDir.sample(pathFilter, trainPercentage, 100 - trainPercentage);
+        //create the training data
         trainData = filesInDirSplit[0];
+        //create the test data
         testData = filesInDirSplit[1];
     }
 

@@ -1,26 +1,21 @@
 package nl.avisi.labs.deeplearning.transferlearning.trainers;
 
-import org.datavec.image.loader.ImageLoader;
 import org.datavec.image.loader.NativeImageLoader;
 import org.deeplearning4j.common.resources.DL4JResources;
+import org.deeplearning4j.nn.api.Layer;
+import org.deeplearning4j.nn.api.Model;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.CacheMode;
 import org.deeplearning4j.nn.conf.ComputationGraphConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
-import org.deeplearning4j.nn.conf.Updater;
 import org.deeplearning4j.nn.conf.WorkspaceMode;
 import org.deeplearning4j.nn.conf.distribution.NormalDistribution;
 import org.deeplearning4j.nn.conf.inputs.InputType;
 import org.deeplearning4j.nn.conf.layers.ConvolutionLayer;
-import org.deeplearning4j.nn.conf.layers.Layer;
-import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.conf.layers.SubsamplingLayer;
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.nn.transferlearning.FineTuneConfiguration;
-import org.deeplearning4j.nn.transferlearning.TransferLearning;
 import org.deeplearning4j.optimize.api.BaseTrainingListener;
-import org.deeplearning4j.zoo.ZooModel;
-import org.deeplearning4j.zoo.model.VGG16;
 import org.jetbrains.annotations.NotNull;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -29,11 +24,8 @@ import org.nd4j.linalg.dataset.api.preprocessor.VGG16ImagePreProcessor;
 import org.nd4j.linalg.exception.ND4JArraySizeException;
 import org.nd4j.linalg.learning.config.IUpdater;
 import org.nd4j.linalg.learning.config.Nesterovs;
-import org.nd4j.linalg.lossfunctions.LossFunctions;
-import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.slf4j.Logger;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import javax.imageio.ImageIO;
 
@@ -66,13 +58,12 @@ public class FeatureMapExtractor {
     private static final int WIDTH = 224;
     private static final int CHANNELS = 3;
 
-     private static int[] inputShape = new int[] {3, 224, 224};
-   private static  int numClasses = 1000;
+    private static int[] inputShape = new int[]{ 3, 224, 224 };
+    private static int numClasses = 1000;
     private static IUpdater updater = new Nesterovs();
-   private static CacheMode cacheMode = CacheMode.NONE;
+    private static CacheMode cacheMode = CacheMode.NONE;
     private static WorkspaceMode workspaceMode = WorkspaceMode.ENABLED;
-   private static ConvolutionLayer.AlgoMode cudnnAlgoMode = ConvolutionLayer.AlgoMode.PREFER_FASTEST;
-
+    private static ConvolutionLayer.AlgoMode cudnnAlgoMode = ConvolutionLayer.AlgoMode.PREFER_FASTEST;
 
     private static Color bgColor = new Color(255, 255, 255);
 
@@ -84,7 +75,6 @@ public class FeatureMapExtractor {
     private enum Orientation {
         LANDSCAPE, PORTRAIT
     }
-
 
     public static void main(String[] args) throws IOException {
 
@@ -103,48 +93,60 @@ public class FeatureMapExtractor {
                                                                                             .padding(1, 1).nIn(inputShape[0]).nOut(64)
                                                                                             .cudnnAlgoMode(cudnnAlgoMode).build(), "in")
                                                     .layer(1, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                            .padding(1, 1).nOut(64).cudnnAlgoMode(cudnnAlgoMode).build(), "0")
+                                                                                            .padding(1, 1).nOut(64).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                            .build(), "0")
                                                     .layer(2, new SubsamplingLayer.Builder()
                                                             .poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2)
                                                             .stride(2, 2).build(), "1")
                                                     // block 2
                                                     .layer(3, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                            .padding(1, 1).nOut(128).cudnnAlgoMode(cudnnAlgoMode).build(), "2")
+                                                                                            .padding(1, 1).nOut(128).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                            .build(), "2")
                                                     .layer(4, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                            .padding(1, 1).nOut(128).cudnnAlgoMode(cudnnAlgoMode).build(), "3")
+                                                                                            .padding(1, 1).nOut(128).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                            .build(), "3")
                                                     .layer(5, new SubsamplingLayer.Builder()
                                                             .poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2)
                                                             .stride(2, 2).build(), "4")
                                                     // block 3
                                                     .layer(6, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                            .padding(1, 1).nOut(256).cudnnAlgoMode(cudnnAlgoMode).build(), "5")
+                                                                                            .padding(1, 1).nOut(256).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                            .build(), "5")
                                                     .layer(7, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                            .padding(1, 1).nOut(256).cudnnAlgoMode(cudnnAlgoMode).build(), "6")
+                                                                                            .padding(1, 1).nOut(256).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                            .build(), "6")
                                                     .layer(8, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                            .padding(1, 1).nOut(256).cudnnAlgoMode(cudnnAlgoMode).build(), "7")
+                                                                                            .padding(1, 1).nOut(256).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                            .build(), "7")
                                                     .layer(9, new SubsamplingLayer.Builder()
                                                             .poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2)
                                                             .stride(2, 2).build(), "8")
                                                     // block 4
                                                     .layer(10, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode).build(), "9")
+                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                             .build(), "9")
                                                     .layer(11, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode).build(), "10")
+                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                             .build(), "10")
                                                     .layer(12, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode).build(), "11")
+                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode)
+                                                                                             .build(), "11")
                                                     .layer(13, new SubsamplingLayer.Builder()
                                                             .poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2)
                                                             .stride(2, 2).build(), "12")
-                                                    // block 5
-                                                    .layer(14, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode).build(), "13")
-                                                    .layer(15, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode).build(), "14")
-                                                    .layer(16, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
-                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode).build(), "15")
-                                                    .layer(17, new SubsamplingLayer.Builder()
-                                                            .poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2)
-                                                            .stride(2, 2).build(), "16")
+//                                                    // block 5
+//                                                    .layer(14, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
+//                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode)
+//                                                                                             .build(), "13")
+//                                                    .layer(15, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
+//                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode)
+//                                                                                             .build(), "14")
+//                                                    .layer(16, new ConvolutionLayer.Builder().kernelSize(3, 3).stride(1, 1)
+//                                                                                             .padding(1, 1).nOut(512).cudnnAlgoMode(cudnnAlgoMode)
+//                                                                                             .build(), "15")
+//                                                    .layer(17, new SubsamplingLayer.Builder()
+//                                                            .poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(2, 2)
+//                                                            .stride(2, 2).build(), "16")
                                                     //                .layer(18, new DenseLayer.Builder().nOut(4096).dropOut(0.5)
                                                     //                        .build())
                                                     //                .layer(19, new DenseLayer.Builder().nOut(4096).dropOut(0.5)
@@ -153,30 +155,40 @@ public class FeatureMapExtractor {
 //                                                            LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).name("output")
 //                                                                                                             .nOut(numClasses).activation(Activation.SOFTMAX) // radial basis function required
 //                                                                                                             .build(), "17")
-                                                    .setOutputs("17")
+                                                    .setOutputs("13")
                                                     .backprop(true).pretrain(false)
                                                     .setInputTypes(InputType.convolutionalFlat(inputShape[2], inputShape[1], inputShape[0]))
                                                     .build();
         computationGraph = new ComputationGraph(conf);
-        Arrays.asList(computationGraph.getLayers()).forEach(layer -> layer.addListeners(new Listener()));
         computationGraph.init();
+        Arrays.asList(computationGraph.getLayers()).forEach(layer -> layer.addListeners(new Listener(layer)));
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("datasets/fruit/apple/apple2.jpg");
         BufferedImage sourceImage = ImageIO.read(is);
         INDArray image = loadImage(sourceImage);
 
         normalizeImage(image);
-        BufferedImage bufferedImage = convert2(Collections.singletonList(processImage(image)), sourceImage);
+        BufferedImage bufferedImage = convert(Collections.singletonList(processImage(image)), sourceImage);
 
         File f = new File("saved.png");
-        ImageIO.write(bufferedImage, "png", f );
+        ImageIO.write(bufferedImage, "png", f);
     }
-
 
     private static class Listener extends BaseTrainingListener {
 
+        private final Layer layer;
+
+        public Listener(final org.deeplearning4j.nn.api.Layer layer) {
+            this.layer = layer;
+        }
+
+        @Override
+        public void onForwardPass(Model model, List<INDArray> activations) {
+            log.debug(model.toString());
+        }
+
     }
 
-    private static BufferedImage convert2(List<INDArray> tensors3D, BufferedImage sourceImage) {
+    private static BufferedImage convert(List<INDArray> tensors3D, BufferedImage sourceImage) {
 
         long width = 0;
         long height = 0;
@@ -185,19 +197,20 @@ public class FeatureMapExtractor {
         int padding_row = 2;
         int padding_col = 80;
 
+        boolean drawArrows = false;
+
         /*
             We determine height of joint output image. We assume that first position holds maximum dimensionality
          */
         long[] shape = tensors3D.get(0).shape();
         long numImages = shape[1];
-//        numImages = 128l;
+        log.debug("Number of images {}", numImages);
         height = (shape[2]);
         width = (shape[3]);
-        //        log.info("Output image dimensions: {height: " + height + ", width: " + width + "}");
+        log.debug("Output image dimensions: {height: " + height + ", width: " + width + "}");
         int maxHeight = 0; //(height + (border * 2 ) + padding_row) * numImages;
         int totalWidth = 0;
         int iOffset = 1;
-        System.out.println("numImages = " + numImages);
         Orientation orientation = Orientation.LANDSCAPE;
         List<BufferedImage> images = new ArrayList<>();
         for (int layer = 0; layer < tensors3D.size(); layer++) {
@@ -218,13 +231,16 @@ public class FeatureMapExtractor {
             images.add(image);
         }
 
-        if (orientation == Orientation.LANDSCAPE) {
-            // append some space for arrows
-            totalWidth += padding_col * 2;
-        } else if (orientation == Orientation.PORTRAIT) {
-            maxHeight += padding_col * 2;
-            maxHeight += sourceImage.getHeight() + (padding_col * 2);
+        if (drawArrows) {
+            if (orientation == Orientation.LANDSCAPE) {
+                // append some space for arrows
+                totalWidth += padding_col * 2;
+            } else if (orientation == Orientation.PORTRAIT) {
+                maxHeight += padding_col * 2;
+                maxHeight += sourceImage.getHeight() + (padding_col * 2);
+            }
         }
+
 
         BufferedImage output = new BufferedImage(totalWidth, maxHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = output.createGraphics();
@@ -235,9 +251,7 @@ public class FeatureMapExtractor {
         BufferedImage singleArrow = null;
         BufferedImage multipleArrows = null;
 
-        /*
-            We try to add nice flow arrow here
-         */
+
         try {
 
             if (orientation == Orientation.LANDSCAPE) {
@@ -260,9 +274,10 @@ public class FeatureMapExtractor {
 
                 iOffset += sourceImage.getWidth();
 
-                if (singleArrow != null)
+                if (drawArrows && singleArrow != null) {
                     graphics2D.drawImage(singleArrow, iOffset + (padding_col / 2) - (singleArrow.getWidth() / 2),
                             (maxHeight / 2) - (singleArrow.getHeight() / 2), null);
+                }
             } else {
                 try {
                     ClassPathResource resource = new ClassPathResource("arrow_singi.PNG");
@@ -282,9 +297,10 @@ public class FeatureMapExtractor {
                         sourceImage.getHeight());
 
                 iOffset += sourceImage.getHeight();
-                if (singleArrow != null)
+                if (drawArrows && singleArrow != null) {
                     graphics2D.drawImage(singleArrow, (totalWidth / 2) - (singleArrow.getWidth() / 2),
                             iOffset + (padding_col / 2) - (singleArrow.getHeight() / 2), null);
+                }
 
             }
             iOffset += padding_col;
@@ -298,7 +314,6 @@ public class FeatureMapExtractor {
             now we merge all images into one big image with some offset
         */
 
-
         for (int i = 0; i < images.size(); i++) {
             BufferedImage curImage = images.get(i);
             if (orientation == Orientation.LANDSCAPE) {
@@ -309,10 +324,11 @@ public class FeatureMapExtractor {
                 if (singleArrow != null && multipleArrows != null) {
                     if (i < images.size() - 1) {
                         // draw multiple arrows here
-                        if (multipleArrows != null)
+                        if (multipleArrows != null) {
                             graphics2D.drawImage(multipleArrows,
                                     iOffset - (padding_col / 2) - (multipleArrows.getWidth() / 2),
                                     (maxHeight / 2) - (multipleArrows.getHeight() / 2), null);
+                        }
                     } else {
                         // draw single arrow
                         //    graphics2D.drawImage(singleArrow, iOffset - (padding_col / 2) - (singleArrow.getWidth() / 2), (maxHeight / 2) - (singleArrow.getHeight() / 2), null);
@@ -326,9 +342,10 @@ public class FeatureMapExtractor {
                 if (singleArrow != null && multipleArrows != null) {
                     if (i < images.size() - 1) {
                         // draw multiple arrows here
-                        if (multipleArrows != null)
+                        if (multipleArrows != null) {
                             graphics2D.drawImage(multipleArrows, (totalWidth / 2) - (multipleArrows.getWidth() / 2),
                                     iOffset - (padding_col / 2) - (multipleArrows.getHeight() / 2), null);
+                        }
                     } else {
                         // draw single arrow
                         //   graphics2D.drawImage(singleArrow, (totalWidth / 2) - (singleArrow.getWidth() / 2),  iOffset - (padding_col / 2) - (singleArrow.getHeight() / 2) , null);
@@ -353,8 +370,9 @@ public class FeatureMapExtractor {
 
         long height = (numRows * (tShape[1] + border + padding_col)) + padding_col + zoomPadding + zoomWidth;
 
-        if (height > Integer.MAX_VALUE)
+        if (height > Integer.MAX_VALUE) {
             throw new ND4JArraySizeException();
+        }
         BufferedImage outputImage = new BufferedImage(maxWidth, (int) height, BufferedImage.TYPE_BYTE_GRAY);
         Graphics2D graphics2D = outputImage.createGraphics();
 
@@ -376,8 +394,6 @@ public class FeatureMapExtractor {
 
             long loc_height = (rHeight) + (border * 2) + padding_row;
             long loc_width = (rWidth) + (border * 2) + padding_col;
-
-
 
             BufferedImage currentImage = renderImageGrayscale(tad2D);
 
@@ -432,8 +448,9 @@ public class FeatureMapExtractor {
 
         return outputImage;
     }
+
     private static BufferedImage renderMultipleImagesLandscape(INDArray tensor3D, int maxHeight, int zoomWidth,
-                                                        int zoomHeight, int numImages) {
+                                                               int zoomHeight, int numImages) {
         /*
             first we need to determine size of the overall image
          */
@@ -471,8 +488,6 @@ public class FeatureMapExtractor {
             long loc_height = (rHeight) + (border * 2) + padding_row;
             long loc_width = (rWidth) + (border * 2) + padding_col;
 
-
-
             BufferedImage currentImage = renderImageGrayscale(tad2D);
 
             /*
@@ -495,8 +510,9 @@ public class FeatureMapExtractor {
             */
 
             graphics2D.setPaint(borderColor);
-            if (tad2D.shape()[0] > Integer.MAX_VALUE || tad2D.shape()[1] > Integer.MAX_VALUE)
+            if (tad2D.shape()[0] > Integer.MAX_VALUE || tad2D.shape()[1] > Integer.MAX_VALUE) {
                 throw new ND4JArraySizeException();
+            }
             graphics2D.drawRect(columnOffset, rowOffset, (int) tad2D.shape()[0], (int) tad2D.shape()[1]);
 
 
@@ -555,6 +571,7 @@ public class FeatureMapExtractor {
 
     /**
      * Processes the image by feeding it through the network
+     *
      * @param image
      * @return
      */

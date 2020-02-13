@@ -1,7 +1,7 @@
 package nl.avisi.labs.deeplearning.transferlearning.trainers;
 
-import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.FruitDataSetIterator;
-import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.TransferLearningIterator;
+import nl.avisi.labs.deeplearning.transferlearning.datahelpers.FruitDataSetIterator;
+import nl.avisi.labs.deeplearning.transferlearning.datahelpers.TransferLearningIterator;
 
 import org.deeplearning4j.common.resources.DL4JResources;
 import org.deeplearning4j.eval.Evaluation;
@@ -42,7 +42,6 @@ public class FruitTransferLearningTrainer {
 
     public static void main(String[] args) throws IOException {
 
-        log.info("\n\nLoading org.deeplearning4j.transferlearning.vgg16...\n\n");
         // ZooModels are pre-defined networks; the model is downloaded from the specified location
         ZooModel zooModel = VGG16.builder().build();
 

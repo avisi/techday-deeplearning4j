@@ -1,8 +1,7 @@
 package nl.avisi.labs.deeplearning.transferlearning.trainers;
 
-import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.DefaultDataSetIterator;
-import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.FruitDataSetIterator;
-import nl.avisi.labs.deeplearning.transferlearning.dataHelpers.TransferLearningIterator;
+import nl.avisi.labs.deeplearning.transferlearning.datahelpers.DefaultDataSetIterator;
+import nl.avisi.labs.deeplearning.transferlearning.datahelpers.TransferLearningIterator;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.deeplearning4j.common.resources.DL4JResources;
@@ -12,20 +11,16 @@ import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.nn.transferlearning.FineTuneConfiguration;
 import org.deeplearning4j.nn.transferlearning.TransferLearning;
-import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.util.ModelSerializer;
 import org.deeplearning4j.zoo.ZooModel;
 import org.deeplearning4j.zoo.model.VGG16;
 import org.jetbrains.annotations.NotNull;
-import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.learning.config.Nesterovs;
 import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-
-import static org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD;
 
 public class BasicTrainer {
     // sets the DL4J model-download folder to a local folder instead of default user home
@@ -54,7 +49,6 @@ public class BasicTrainer {
         log.info(vgg16.summary());
         //create a new outputlayer for our own specific use case:
 
-        //TODO
         OutputLayer outputLayer = createOutputLayer();
         ComputationGraph vgg16Transfer = new TransferLearning.GraphBuilder(vgg16)//
                                                                                  .fineTuneConfiguration(getFineTuneConfiguration())//
