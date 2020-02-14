@@ -1,47 +1,65 @@
+# Hands-on 
 
+## Prerequisites
+
+### Java version
 * DL4J inspects your CPU prior to running a network on it. Not all MacOS Java ports handle this correctly, causing
-an error like 
-
+an error like:
 ````C  [libc++abi.dylib+0x30b4]  _ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi+0x4````
 
 On a MacBook we used Java 11.0.3 with no such problem.
 
+## Setup of the project
+
+Execute the following steps to get the project up and running:
+
 * Import the project as a Maven Project.
 
-* Run 
+* Run ````mvn clean install````
 
-````mvn clean install````
+## Starter
 
-* Run the FruitTransferLearningTrainer
+For the starter part we are going to run a fully trained network and we are going to experiment with it. \
+The fully trained network is able to make a distinction between bananas and no bananas. 
 
-* Run the Application as a Spring Boot application
+# TODO: Maak directory met de pretrained banana classifier als jar. 
+Run the project by executing the following command from the home directory of this project: ```java -jar banana-classifier/banana-classifier-1.0.0-SNAPSHOT.jar ``` 
 
-* Point your browser to http://localhost:8081
+After running this jar, you will be able to access the trained classifier at http://localhost:8081. You can upload images or use your laptop's camera.
+Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
+For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana?
+Make some notes about your findings, so you can use them later on when we are going to discuss the results.
 
-* Upload an image file or take a picture with your laptop's camera
+Tip: If you're lucky, you can grab a banana from the bar and use the camera of your laptop!
 
-* Handson
+## Intermediate
 
-Three different applications
+In this second part we are going to train a network ourselves. 
 
-Three branches 
+### Setting up the dataset
+You can use one of the predefined datasets from: https://console.cloud.google.com/storage/browser/techday_feb2020
+Please choose a maximum of three different categories. For example, three types of dogs from the Dogs dataset: chihuaha, beagle and pug.
+Create a folder for your dataset inside [src/main/resources/datasets](src/main/resources/datasets) and place the different categories inside them as folders.
 
-- Runnable jar met bijv. bananenidee, dat kun je runnen
+### Create a dataset iterator
+Implement the missing functionality inside the [DefaultDataSetIterator](src/main/java/nl/avisi/labs/deeplearning/transferlearning/datahelpers/DefaultDataSetIterator.java)
+This iterator will retrieve the images we just placed inside our resources folder.
 
-- Implementatie van dataset iterator (obv de hints) en implementatie van de transfer learning config (laatste x layers vervangen)
+### Create a transfer learning trainer
+Implement the missing functionality inside the [BasicTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/trainers/BasicTrainer.java)
+In this trainer we will we use the existing VGG16 network and modify it. We will remove the classifier from it and append our new classifier for our dataset.
 
-- Dataset definieren (eigen dataset) of ingaan op de vraag waarom het model een bepaald resultaat oplevert
+You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/trainers/FruitTransferLearningTrainer.java) as an example.
+
+### Train your network
+When you finished implementing the transfer learning trainer you can start training by running the main function inside the BasicTrainer.
+While training you can keep track of the progress in the console and check the current scores of the network. 
+
+### Test your classifier
+Extend the [DataClassifier](src/main/java/nl/avisi/labs/deeplearning/transferlearning/DataClassifier.java) as a Spring Boot @Component and assign it a unique @Profile e.g. "helloWorld".
+Next run the application with "helloWorld" or the other profile you have set. Experiment with it by uploading some new pictures related to your dataset.
 
 
-
-* Running the fruit recognition application
-- Run the FruitTransferLearningTrainer application
-- Run the FruitClassifier application by running the Application with Spring Boot profile "fruit" as active profile
-
-
-* Creating your own classifier:
-- Implement the TransferLearningIterator interface
-- Extend the BaseTransferLearningTrainer class  
-- Extend the DataClassifier class as a Spring Boot @Component and assign it a unique @Profile e.g. "helloWorld"
-- Run the Run the Application with "helloWorld" as active profile
-
+## Advanced
+If you are able to succeed in the first two levels you can start thinking of your own use case, where it is possible to apply image classification.
+Search for images which you can use and execute the same steps as in the intermediate level for your new dataset.  
