@@ -38,28 +38,33 @@ In this second part we are going to train a network ourselves.
 
 ### Setting up the dataset
 You can use one of the predefined datasets from: https://console.cloud.google.com/storage/browser/techday_feb2020
-Please choose a maximum of three different categories. For example, three types of dogs from the Dogs dataset: chihuaha, beagle and pug.
+Please choose a maximum of three different categories. For example, three types of dogs from the Dogs dataset: chihuaha, beagle and pug. For adequate training about 30 images for each
+category will be sufficient.
+
 Create a folder for your dataset inside [src/main/resources/datasets](src/main/resources/datasets) and place the different categories inside them as folders.
 
 ### Create a dataset iterator
-Implement the missing functionality inside the [DefaultDataSetIterator](src/main/java/nl/avisi/labs/deeplearning/transferlearning/datahelpers/DefaultDataSetIterator.java)
+Implement the missing functionality inside the [DefaultDataSetIterator](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/intermediate/DefaultDataSetIterator.java)
 This iterator will retrieve the images we just placed inside our resources folder.
 
 ### Create a transfer learning trainer
-Implement the missing functionality inside the [BasicTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/trainers/BasicTrainer.java)
+Implement the missing functionality inside the [BasicTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/intermediate/BasicTrainer.java)
 In this trainer we will we use the existing VGG16 network and modify it. We will remove the classifier from it and append our new classifier for our dataset.
 
-You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/trainers/FruitTransferLearningTrainer.java) as an example.
+You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/starter/FruitTransferLearningTrainer.java) as an example.
 
 ### Train your network
 When you finished implementing the transfer learning trainer you can start training by running the main function inside the BasicTrainer.
 While training you can keep track of the progress in the console and check the current scores of the network. 
 
 ### Test your classifier
-Extend the [DataClassifier](src/main/java/nl/avisi/labs/deeplearning/transferlearning/DataClassifier.java) as a Spring Boot @Component and assign it a unique @Profile e.g. "helloWorld".
+Extend the [DataClassifier](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/DataClassifier.java) as a Spring Boot @Component and assign it a unique @Profile e.g. "helloWorld".
 Next run the application with "helloWorld" or the other profile you have set. Experiment with it by uploading some new pictures related to your dataset.
 
 
 ## Advanced
 If you are able to succeed in the first two levels you can start thinking of your own use case, where it is possible to apply image classification.
-Search for images which you can use and execute the same steps as in the intermediate level for your new dataset.  
+Search for images which you can use and execute the same steps as in the intermediate level for your new dataset. Instead of using the VGG-16 architecture as an alternative any of the other zoo models can be used
+e.g.
+- VGG-19
+- 
