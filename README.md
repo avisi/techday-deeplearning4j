@@ -21,11 +21,8 @@ Execute the following steps to get the project up and running:
 
 For the starter part we are going to run a fully trained network and we are going to experiment with it. \
 The fully trained network is able to make a distinction between bananas and no bananas. 
-
-# TODO: Maak directory met de pretrained banana classifier als jar. 
-Run the project by executing the following command from the home directory of this project: ```java -jar banana-classifier/banana-classifier-1.0.0-SNAPSHOT.jar ``` 
-
-After running this jar, you will be able to access the trained classifier at http://localhost:8081. You can upload images or use your laptop's camera.
+ 
+Run the application with the profile name "fruit". Now, you will be able to access the trained classifier at http://localhost:8081. You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
 For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana?
 Make some notes about your findings, so you can use them later on when we are going to discuss the results.
@@ -38,7 +35,7 @@ In this second part we are going to train a network ourselves.
 
 ### Setting up the dataset
 You can use one of the predefined datasets from: https://console.cloud.google.com/storage/browser/techday_feb2020
-Please choose a maximum of three different categories. For example, three types of dogs from the Dogs dataset: chihuaha, beagle and pug. For adequate training about 30 images for each
+Please choose a maximum of three different categories. For example, three types of dogs from the Dogs dataset: chihuahua, beagle and pug. For adequate training about 30 images for each
 category will be sufficient.
 
 Create a folder for your dataset inside [src/main/resources/datasets](src/main/resources/datasets) and place the different categories inside them as folders.
