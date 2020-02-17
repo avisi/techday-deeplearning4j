@@ -55,7 +55,7 @@ public abstract class TransferLearningIterator {
      * The labels must be alphabetically sorted (i.e. match the order of subfolders)
      * @return a list of lables
      */
-    protected abstract List<String> getLabels();
+    public abstract List<String> getLabels();
     /**
      * The folder on the classpath where the dataset can be found.
      * The dataset must contain one subfolder for each class to distinguish
