@@ -26,7 +26,7 @@ public class DefaultDataSetIterator extends TransferLearningIterator {
     }
 
     @Override
-    protected List<String> getLabels() {
+    public List<String> getLabels() {
         throw new NotImplementedException("Fix me");
     }
 

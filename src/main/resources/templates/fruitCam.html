@@ -39,10 +39,10 @@
                     </thead>
                     <tr th:if="${predictions != null}" th:each="p : ${predictions}">
                         <td height="80px" class="score">
-                            <p th:text="${p.percentage}" style="color:black"></p>
+                            <p th:text="${p.score}" style="color:black"></p>
                         </td>
                         <td height="80px" class="decision">
-                            <p th:if="${p.percentage &gt; 0.5}" th:text="${p.label + ' detected'}" style="color:black"></p>
+                            <p th:if="${p.score &gt; 0.5}" th:text="${p.label + ' detected'}" style="color:black"></p>
 
                         </td>
                     </tr>
@@ -71,10 +71,10 @@
                 <table style="text-align: center;margin-top: 20px;margin-left: auto; margin-right: auto;">
                     <tr th:if="${predictions != null}" th:each="p : ${predictions}">
                         <td height="80px">
-                            <p th:text="${p.percentage}" style="color:black"></p>
+                            <p th:text="${p.score}" style="color:black"></p>
                         </td>
                         <td height="80px">
-                            <p th:if="${p.percentage &gt; 0.5}" th:text="${p.label + ' detected'}" style="color:black"></p>
+                            <p th:if="${p.score &gt; 0.5}" th:text="${p.label + ' detected'}" style="color:black"></p>
 
                         </td>
                     </tr>

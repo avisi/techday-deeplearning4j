@@ -1,13 +1,29 @@
 package nl.avisi.labs.deeplearning.transferlearning.handson.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
 public class Prediction {
 
-    private String label;
-    private double percentage;
+    private String category;
+    private double score;
+
+    public Prediction(String category, double score) {
+        this.category = category;
+        this.score = score;
+    }
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(final String category) {
+        this.category = category;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(final double score) {
+        this.score = score;
+    }
+
 
 }
