@@ -22,7 +22,7 @@ Execute the following steps to get the project up and running:
 For the starter part we are going to run a fully trained network and we are going to experiment with it. \
 The fully trained network is able to make a distinction between bananas and no bananas. 
  
-Run the application with the profile name "fruit". Now, you will be able to access the trained classifier at http://localhost:8081. You can upload images or use your laptop's camera.
+Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at http://localhost:8081. You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
 For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana?
 Make some notes about your findings, so you can use them later on when we are going to discuss the results.
