@@ -41,11 +41,11 @@ category will be sufficient.
 Create a folder for your dataset inside [src/main/resources/datasets](src/main/resources/datasets) and place the different categories inside them as folders.
 
 ### Create a dataset iterator
-Implement the missing functionality inside the [DefaultDataSetIterator](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/intermediate/DefaultDataSetIterator.java)
+Implement the missing functionality inside the [DefaultDataSetIterator](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/intermediate/IntermediateDataSetIterator.java)
 This iterator will retrieve the images we just placed inside our resources folder.
 
 ### Create a transfer learning trainer
-Implement the missing functionality inside the [BasicTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/intermediate/BasicTrainer.java)
+Implement the missing functionality inside the [BasicTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/intermediate/IntermediateTrainer.java)
 In this trainer we will we use the existing VGG16 network and modify it. We will remove the classifier from it and append our new classifier for our dataset.
 
 You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/starter/FruitTransferLearningTrainer.java) as an example.
