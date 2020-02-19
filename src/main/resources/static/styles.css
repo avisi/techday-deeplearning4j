@@ -40,10 +40,12 @@ video {
 }
 
 .prediction {
+	width: 300px;
 	font-size: 30pt;
 }
 
 .score {
+	width: 300px;
 	text-align: left;
 }
 

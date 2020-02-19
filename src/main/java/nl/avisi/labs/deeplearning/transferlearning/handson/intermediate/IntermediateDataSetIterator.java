@@ -6,9 +6,9 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 
-public class DefaultDataSetIterator extends TransferLearningIterator {
+public class IntermediateDataSetIterator extends TransferLearningIterator {
 
-    public DefaultDataSetIterator(int batchSize, int trainPercentage) {
+    public IntermediateDataSetIterator(int batchSize, int trainPercentage) {
         super(batchSize, trainPercentage);
         throw new NotImplementedException("Fix me");
     }

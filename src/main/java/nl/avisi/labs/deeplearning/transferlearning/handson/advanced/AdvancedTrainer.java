@@ -1,4 +1,4 @@
-package nl.avisi.labs.deeplearning.transferlearning.handson.intermediate;
+package nl.avisi.labs.deeplearning.transferlearning.handson.advanced;
 
 import nl.avisi.labs.deeplearning.transferlearning.handson.trainers.BaseTransferLearningTrainer;
 
@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 
-public class BasicTrainer extends BaseTransferLearningTrainer {
+public class AdvancedTrainer extends BaseTransferLearningTrainer {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(BasicTrainer.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(AdvancedTrainer.class);
 
     private static final int NUM_CLASSES = 2; //Banana / No_banana
     private static final long SEED = 12345; //Should normally be random, but is set in this case to be get reproducible results
@@ -20,7 +20,7 @@ public class BasicTrainer extends BaseTransferLearningTrainer {
     private static final int BATCH_SIZE = 5;
 
     public static void main(String[] args) throws IOException {
-        new BasicTrainer().train();
+        new AdvancedTrainer().train();
     }
 
     @Override
