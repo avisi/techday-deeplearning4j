@@ -58,6 +58,9 @@ While training you can keep track of the progress in the console and check the c
 Extend the [DataClassifier](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/DataClassifier.java) as a Spring Boot @Component and assign it a unique @Profile e.g. "helloWorld".
 Next run the application with "helloWorld" or the other profile you have set. Experiment with it by uploading some new pictures related to your dataset.
 
+Run the application from the Run Menu or alternatively do
+
+mvn spring-boot:run -Dspring.profiles.active=helloWorld
 
 ## Advanced
 If you are able to succeed in the first two levels you can start thinking of your own use case, where it is possible to apply image classification.

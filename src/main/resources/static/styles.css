@@ -4,8 +4,9 @@ body {
 
 #container {
 	heigth: 100vh;
-	width: 80vw;
+	width: 100vw;
 	margin-left: 10vw;
+	display:block; margin-right: auto; margin-top: 20px
 }
 
 video {
@@ -30,10 +31,16 @@ video {
 #tabs {
 	width: 100%;
 	height: 100%;
-	/*background-image: url(Powered-by-blue-social.svg);*/
-	/*background-repeat: no-repeat;*/
-	/*background-position: center;*/
-	/*background-size: fill;*/
+}
+
+.predictions {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px
+}
+
+.prediction {
+	font-size: 30pt;
 }
 
 .score {
