@@ -69,6 +69,11 @@ public class UploadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        for (Prediction prediction : predictions) {
+            if (prediction.getScore() < 0.01) {
+                prediction.setScore(0.0);
+            }
+        }
 
         model.addAttribute("image", "/files/" + file.getOriginalFilename());
         model.addAttribute("predictions", predictions);

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="/avisi/utils.js"></script>
 </head>
 <body>
-<div id="container" style="width: 800px; display:block; margin-left: auto; margin-right: auto; margin-top: 20px">
+<div id="container" >
     <div id="errorContainer"/>
     <div id="tabs">
         <ul>
@@ -29,15 +29,16 @@
                         </td>
                     </tr>
                 </table>
-            <div id="filePredictions" th:fragment="filePredictions" style="margin-left: auto; margin-right: auto; margin-top: 50px">
+            <div id="filePredictions" class="predictions" th:fragment="filePredictions">
                 <table style="text-align: center;margin-top: 20px;margin-left: auto; margin-right: auto;">
                     <thead>
-                    <tr>
+                    <tr class="prediction">
                         <th class="score">Score</th>
                         <th class="decision">Decision</th>
+                        <th class="decision"/>
                     </tr>
                     </thead>
-                    <tr th:if="${predictions != null}" th:each="p : ${predictions}">
+                    <tr class="prediction" th:if="${predictions != null}" th:each="p : ${predictions}">
                         <td height="80px" class="score">
                             <p th:text="${p.score}" style="color:black"></p>
                         </td>
@@ -45,6 +46,11 @@
                             <p th:if="${p.score &gt; 0.5}" th:text="${p.category + ' detected'}" style="color:black"></p>
 
                         </td>
+                        <td height="80">
+                            <img th:if="${p.score &gt; 0.8}" src="alarm.gif"
+                                 style="max-height: 80px"/>
+                        </td>
+
                     </tr>
 
 
@@ -67,9 +73,9 @@
                     </td>
                 </tr>
             </table>
-            <div id="cameraPredictions" th:fragment="cameraPredictions" style="margin-left: auto; margin-right: auto; margin-top: 50px">
+            <div id="cameraPredictions"  class="predictions"  th:fragment="cameraPredictions">
                 <table style="text-align: center;margin-top: 20px;margin-left: auto; margin-right: auto;">
-                    <tr th:if="${predictions != null}" th:each="p : ${predictions}">
+                    <tr class="prediction" th:if="${predictions != null}" th:each="p : ${predictions}">
                         <td height="80px">
                             <p th:text="${p.score}" style="color:black"></p>
                         </td>
@@ -77,12 +83,16 @@
                             <p th:if="${p.score &gt; 0.5}" th:text="${p.category + ' detected'}" style="color:black"></p>
 
                         </td>
+                        <td height="80">
+                            <img th:if="${p.score &gt; 0.8}" src="alarm.gif"
+                                 style="max-height: 80px"/>
+                        </td>
                     </tr>
 
 
                 </table>
-
             </div>
+
         </div>
     </div>
 
