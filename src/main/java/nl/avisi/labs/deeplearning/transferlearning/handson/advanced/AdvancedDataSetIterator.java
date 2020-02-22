@@ -10,9 +10,7 @@ public class AdvancedDataSetIterator extends TransferLearningIterator {
 
     public AdvancedDataSetIterator(int batchSize, int trainPercentage) {
         super(batchSize, trainPercentage);
-        throw new NotImplementedException("Fix me");
     }
-
 
     @Override
     protected int getNumberOfClasses() {
@@ -20,13 +18,13 @@ public class AdvancedDataSetIterator extends TransferLearningIterator {
     }
 
     @Override
-    //hier zou meer informatie bij kunnen
     protected String getDataSetFolder() {
         throw new NotImplementedException("Fix me");
     }
 
     @Override
     public List<String> getLabels() {
+        //Hint: It is important to put the labels in alphabetical order
         throw new NotImplementedException("Fix me");
     }
 

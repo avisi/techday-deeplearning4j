@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>nl.avisi.techday.deeplearning</groupId>
-    <artifactId>fruit-classifier</artifactId>
+    <artifactId>image-classifier</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>fruit-classifier</name>
+    <name>image-classifier</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
