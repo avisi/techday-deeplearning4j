@@ -28,7 +28,7 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
 
     private static final int NUM_CLASSES = 2; //Banana / No_banana
     private static final int TRAIN_PERC = 80; // Percentage of images that should be included in the trainings set, the rest is included in the test set
-    private static final int BATCH_SIZE = 5;
+    private static final int BATCH_SIZE = 5; // How many images are processed at a time
     private static final int MAX_NUMBER_OF_ITERATIONS = 40;
 
     public static void main(String[] args) throws IOException {
@@ -41,9 +41,21 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
         // ZooModels are pre-defined networks; the model is downloaded from the specified location
         ZooModel zooModel = createModelFromZoo();
 
+
+        // Initialize the pretrained network
         ComputationGraph vgg16 = (ComputationGraph) zooModel.initPretrained();
 
+
+        // Deep learning has two phases:
+        // 1. feature detection
+        // 2. classification
+        //
+        // We will use transfer learning i.e. we re-purpose a network for our own use case. So instead of training a network from scratch we
+        // re-use a trained network and adapt it by replacing the classification layer(s) with our own layers. So for instance in stead of training
+        // a network to recognize 1000 categories we can remove the classification layer and add one which is used to recognize only 2 categories.
+        // By 'freezing' anything below the classification layers we only need to train the classification layers.
         log.info(vgg16.summary());
+
         //create a new outputlayer for our own specific use case:
 
         Layer outputLayer = createOutputLayer();
@@ -51,11 +63,14 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
         TransferLearningIterator iterator = null;
 
         if (outputLayer != null) {
+            // the VGG16 network has 16 layers: 13 layers used for feature detection and 3 for classification. The last two layers are called "fc2" and "predictions" respectively.
+            // We will freeze all layers up to and including "fc2" and replace the layer called "predictions". Frozen layers are not updated during backpropagation.
             vgg16Transfer = new TransferLearning.GraphBuilder(vgg16)//
+                                                                    // fine tuning is used during backpropagation
                                                     .fineTuneConfiguration(getFineTuneConfiguration())//
                                                     .setFeatureExtractor("fc2") //the specified layer and below are "frozen"
-                                                    // the other layers are trained
-                                                    .removeVertexKeepConnections("predictions") //replace the functionality of the final layer
+                                                    // the remaining layer is trained
+                                                    .removeVertexKeepConnections("predictions") //replace the functionality of the final layer with out own layer
                                                     .addLayer("predictions", outputLayer, "fc2").build();
             iterator = new FruitDataSetIterator(BATCH_SIZE, TRAIN_PERC);
             iterator.setup();
@@ -102,6 +117,12 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
 
     @Override
     protected OutputLayer createOutputLayer() {
+        // create an output layer. The  last-but-one layer of the VGG16 model has 4096 outgoing connections.
+        // our new output layer has 2 outgoing signals (since we have two classes: banana or no_banana)
+        // for classification purposes the SoftMax activation function is recommended as it results in a probability distribution
+        // i.e. the sum of all scores in the output layer is 1
+        // furthermore all values are in the interval [0,1> even for negative input values
+
         return new OutputLayer.Builder(NEGATIVELOGLIKELIHOOD)//
                                                              .nIn(4096)
                                                              .nOut(NUM_CLASSES)

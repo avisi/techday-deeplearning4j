@@ -13,11 +13,6 @@ public class IntermediateTrainer extends BaseTransferLearningTrainer {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(IntermediateTrainer.class);
 
-    private static final int NUM_CLASSES = 2; //Banana / No_banana
-    private static final int TRAIN_PERC = 80; // Percentage of images that should be included in the trainings set, the rest is included in the test set
-    private static final int BATCH_SIZE = 5;
-    private static final int MAX_NUMBER_OF_ITERATIONS = 20; //20 should be a good amount to start with. Probably you need some more iterations to achieve a higher performance
-
     public static void main(String[] args) throws IOException {
         new IntermediateTrainer().train();
     }

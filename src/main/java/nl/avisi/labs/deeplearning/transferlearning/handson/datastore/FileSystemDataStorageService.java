@@ -23,7 +23,7 @@ public class FileSystemDataStorageService implements DataStorageService {
     private final Path rootLocation;
 
     @Autowired
-    public FileSystemDataStorageService(StorageProperties properties) {
+    public FileSystemDataStorageService(DataStorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
     }
 

@@ -2,7 +2,8 @@ package nl.avisi.labs.deeplearning.transferlearning.handson.datastore;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-public class StorageProperties {
+@ConfigurationProperties("storage")
+public class DataStorageProperties {
 
     /**
      * Folder location for storing uploaded files

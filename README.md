@@ -31,6 +31,7 @@ For Maven users:
 * Run ``mvn clean install``
 
 
+
 ## Starter
 
 
@@ -72,7 +73,8 @@ Do not only copy the contents of the FruitTransferLearningTrainer. Try to find o
 
 ### Train your network
 When you finished implementing the transfer learning trainer you can start training by running the main function inside the BasicTrainer.
-While training you can keep track of the progress in the console and check the current scores of the network. 
+While training you can keep track of the progress in the console and check the current scores of the network.
+ 
 
 ### Test your classifier
 Extend the [DataClassifier](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/DataClassifier.java) as a Spring Boot @Component and assign it a unique @Profile e.g. "helloWorld".
@@ -80,7 +82,10 @@ Next run the application with "helloWorld" or the other profile you have set. Ru
 ```mvn spring-boot:run -Dspring.profiles.active=helloWorld```
 
 Experiment with your trained model by uploading some new pictures related to your dataset. Just like you did at the starter part.
-You may want to train your network again if it doesn't perform well. For example you can try to use more iterations for training.
+You may want to train your network again if it doesn't perform well. For example you can try to use more iterations for training. 
+
+Try to determine what actually triggers your network to make a certain decision. For instance, what happens if you rotate the image or if you skew the image.
+  
 
 ## Advanced
 If you are able to succeed in the first two levels you can start thinking of your own use case, where it is possible to apply image classification.

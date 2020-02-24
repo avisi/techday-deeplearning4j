@@ -27,15 +27,20 @@ public abstract class BaseTransferLearningTrainer {
 
     protected abstract ZooModel createModelFromZoo();
 
+    /**
+     * This method returns the distribution of weights to associate with the incoming connections
+     * @return
+     */
     protected NormalDistribution getDist() {
         return new NormalDistribution(0, 0.2 * (2.0 / (4096 + getNumberOfClasses())));
     }
 
     protected abstract int getNumberOfClasses();
 
-    /**
-     * What does this do?
+    /***
      *
+     * The fine tune configuration is used during the backpropagation phase to adjust weights.
+     * The NesterovsUpdater is a popular approach.
      * @return
      */
     protected FineTuneConfiguration getFineTuneConfiguration() {

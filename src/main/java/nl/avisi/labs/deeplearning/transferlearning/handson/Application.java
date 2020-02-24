@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import nl.avisi.labs.deeplearning.transferlearning.handson.datastore.StorageProperties;
+import nl.avisi.labs.deeplearning.transferlearning.handson.datastore.DataStorageProperties;
 import nl.avisi.labs.deeplearning.transferlearning.handson.datastore.DataStorageService;
 
 @SpringBootApplication
-@EnableConfigurationProperties(StorageProperties.class)
+@EnableConfigurationProperties(DataStorageProperties.class)
 public class Application {
 
     public static void main(String[] args) {
