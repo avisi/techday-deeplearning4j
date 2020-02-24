@@ -38,7 +38,7 @@ For Maven users:
 For the starter part we are going to run a fully trained network and we are going to experiment with it. \
 The fully trained network is able to make a distinction between bananas and no bananas. 
  
-Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at http://localhost:8081. You can upload images or use your laptop's camera.
+Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at [localhost](http://localhost:8081). You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
 For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana?
 Make some notes about your findings, so you can use them later on when we are going to discuss the results.
@@ -84,7 +84,7 @@ Next run the application with "helloWorld" or the other profile you have set. Ru
 Experiment with your trained model by uploading some new pictures related to your dataset. Just like you did at the starter part.
 You may want to train your network again if it doesn't perform well. For example you can try to use more iterations for training. 
 
-Try to determine what actually triggers your network to make a certain decision. For instance, what happens if you rotate the image or if you skew the image.
+Try to determine what actually triggers your network to make a certain decision. For instance, what happens if you rotate the image or if you skew the image. What are the distinguishing features your model is triggered by?
   
 
 ## Advanced
