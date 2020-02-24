@@ -19,10 +19,16 @@ Execute the following steps to get the project up and running:
 
 ## Starter
 
+
 For the starter part we are going to run a fully trained network and we are going to experiment with it. \
-The fully trained network is able to make a distinction between bananas and no bananas. 
+The fully trained network is able to make a distinction between bananas and no bananas. \ 
+
+Run the FruitModelTrainer to train the model. This results in a file called FruitModel.zip
+During training DL4J will report what the current values are for
+
+Precision 
  
-Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at http://localhost:8081. You can upload images or use your laptop's camera.
+Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at http://localhost:8080. You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
 For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana?
 Make some notes about your findings, so you can use them later on when we are going to discuss the results.
@@ -50,7 +56,7 @@ In this trainer we will we use the existing VGG16 network and modify it. We will
 
 You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/starter/FruitTransferLearningTrainer.java) as an example.
 
-### Train your network
+### Train your 
 When you finished implementing the transfer learning trainer you can start training by running the main function inside the BasicTrainer.
 While training you can keep track of the progress in the console and check the current scores of the network. 
 
@@ -60,6 +66,7 @@ Next run the application with "helloWorld" or the other profile you have set. Ex
 
 Run the application from the Run Menu or alternatively do
 
+export SPRING_PROFILES_ACTIVE=fruit
 mvn spring-boot:run -Dspring.profiles.active=helloWorld
 
 ## Advanced
