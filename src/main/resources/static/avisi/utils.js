@@ -26,9 +26,9 @@ function Utils(errorOutputId) { // eslint-disable-line no-unused-vars
         let img = new Image();
         img.crossOrigin = 'anonymous';
         img.onload = function() {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0, img.width, img.height);
+            canvas.width = 200;
+            canvas.height = 200*img.height/img.width;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         };
         img.src = url;
     };

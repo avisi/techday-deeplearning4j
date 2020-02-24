@@ -1,12 +1,11 @@
-package nl.avisi.labs.deeplearning.transferlearning.handson.storage;
+package nl.avisi.labs.deeplearning.transferlearning.handson.datastore;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("storage")
 public class StorageProperties {
 
     /**
-     * Folder location for storing files
+     * Folder location for storing uploaded files
      */
     private String location = "upload-dir";
 

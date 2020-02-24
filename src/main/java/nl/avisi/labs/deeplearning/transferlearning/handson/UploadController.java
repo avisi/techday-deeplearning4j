@@ -1,7 +1,11 @@
 package nl.avisi.labs.deeplearning.transferlearning.handson;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -15,19 +19,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import nl.avisi.labs.deeplearning.transferlearning.handson.model.Prediction;
-import nl.avisi.labs.deeplearning.transferlearning.handson.storage.StorageService;
+import nl.avisi.labs.deeplearning.transferlearning.handson.datastore.DataStorageService;
 
 @Controller
 public class UploadController {
 
-    private final StorageService storageService;
+    private final DataStorageService dataStorageService;
 
-    private DataClassifier classifier;
+    private final DataClassifier classifier;
+
+    private final DecimalFormat df;
 
     @Autowired
-    public UploadController(StorageService storageService, DataClassifier dataClassifier) {
-        this.storageService = storageService;
+    public UploadController(DataStorageService dataStorageService, DataClassifier dataClassifier) {
+        this.dataStorageService = dataStorageService;
         this.classifier = dataClassifier;
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        df = (DecimalFormat) nf;
+        df.applyPattern("#.##");
+        df.setRoundingMode(RoundingMode.FLOOR);
     }
 
     @GetMapping("/")
@@ -39,14 +49,17 @@ public class UploadController {
     public String handleWebcamUpload(@RequestParam("imgBase64") String data, Model model) {
 
         String base64Image = data.split(",")[1];
-        storageService.store(base64Image);
+        dataStorageService.store(base64Image);
 
-        Resource image = storageService.loadAsResource("image.jpg");
+        Resource image = dataStorageService.loadAsResource("image.jpg");
         List<Prediction> predictions = null;
         try {
             predictions = classifier.classify(image.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        for (Prediction prediction : predictions) {
+            prediction.setScore(Double.valueOf(df.format(prediction.getScore())));
         }
 
         model.addAttribute("image", "/files/image.jpg");
@@ -60,9 +73,9 @@ public class UploadController {
     @PostMapping("/upload/file")
     public String handleFileUpload(@RequestParam("image") MultipartFile file, Model model) {
 
-        storageService.store(file);
+        dataStorageService.store(file);
 
-        Resource image = storageService.loadAsResource(file.getOriginalFilename());
+        Resource image = dataStorageService.loadAsResource(file.getOriginalFilename());
         List<Prediction> predictions = null;
         try {
             predictions = classifier.classify(image.getInputStream());
@@ -70,9 +83,7 @@ public class UploadController {
             e.printStackTrace();
         }
         for (Prediction prediction : predictions) {
-            if (prediction.getScore() < 0.01) {
-                prediction.setScore(0.0);
-            }
+            prediction.setScore(Double.valueOf(df.format(prediction.getScore())));
         }
 
         model.addAttribute("image", "/files/" + file.getOriginalFilename());

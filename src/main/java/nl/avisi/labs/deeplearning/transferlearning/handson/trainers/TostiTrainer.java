@@ -1,14 +1,13 @@
 package nl.avisi.labs.deeplearning.transferlearning.handson.trainers;
 
-import nl.avisi.labs.deeplearning.transferlearning.handson.datahelpers.TostiDataSetIterator;
-import nl.avisi.labs.deeplearning.transferlearning.handson.datahelpers.TransferLearningIterator;
+import nl.avisi.labs.deeplearning.transferlearning.handson.iterators.TostiDataSetIterator;
+import nl.avisi.labs.deeplearning.transferlearning.handson.iterators.TransferLearningIterator;
 
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.layers.Layer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.nn.transferlearning.TransferLearning;
-import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.util.ModelSerializer;
 import org.deeplearning4j.zoo.ZooModel;
 import org.deeplearning4j.zoo.model.VGG16;

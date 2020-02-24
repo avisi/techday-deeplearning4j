@@ -1,6 +1,6 @@
 package nl.avisi.labs.deeplearning.transferlearning.handson.intermediate;
 
-import nl.avisi.labs.deeplearning.transferlearning.handson.datahelpers.TransferLearningIterator;
+import nl.avisi.labs.deeplearning.transferlearning.handson.iterators.TransferLearningIterator;
 
 import org.apache.commons.lang3.NotImplementedException;
 

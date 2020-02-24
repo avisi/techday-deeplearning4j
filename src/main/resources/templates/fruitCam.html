@@ -47,7 +47,7 @@
 
                         </td>
                         <td height="80">
-                            <img th:if="${p.score &gt; 0.8}" src="alarm.gif"
+                            <img th:if="${p.score &gt; 0.8 and !#strings.contains(p.category, 'no_')}" src="alarm.gif"
                                  style="max-height: 80px"/>
                         </td>
 
@@ -75,16 +75,23 @@
             </table>
             <div id="cameraPredictions"  class="predictions"  th:fragment="cameraPredictions">
                 <table style="text-align: center;margin-top: 20px;margin-left: auto; margin-right: auto;">
+                    <thead>
+                    <tr class="prediction">
+                        <th class="score">Score</th>
+                        <th class="decision">Decision</th>
+                        <th class="decision"/>
+                    </tr>
+                    </thead>
                     <tr class="prediction" th:if="${predictions != null}" th:each="p : ${predictions}">
-                        <td height="80px">
+                        <td height="80px" class="score">
                             <p th:text="${p.score}" style="color:black"></p>
                         </td>
-                        <td height="80px">
+                        <td height="80px" class="decision">
                             <p th:if="${p.score &gt; 0.5}" th:text="${p.category + ' detected'}" style="color:black"></p>
 
                         </td>
                         <td height="80">
-                            <img th:if="${p.score &gt; 0.8}" src="alarm.gif"
+                            <img th:if="${p.score &gt; 0.8 and !#strings.contains(p.category, 'no_')}" src="alarm.gif"
                                  style="max-height: 80px"/>
                         </td>
                     </tr>
@@ -118,11 +125,13 @@
 
   });
   $('#upload').on('click', function(){
+    $('#upload').prop('disabled', true);
     var data = new FormData();
     data.append('image', $('#file').prop('files')[0]);
       let imgUrl = URL.createObjectURL($('#file').prop('files')[0]);
       let utils = new Utils('errorContainer');
       utils.loadImageToCanvas(imgUrl, 'fileCanvas');
+
 
 
     $.ajax({
@@ -134,7 +143,15 @@
       dataType : 'text',
       success: function(predictions){
         $('#filePredictions').html(predictions);
+        $('#upload').prop('disabled', false);
+      },
+      error: function(xhr, error){
+        console.log(xhr);
+        console.log(error);
+        $('#errorContainer').append(error);
+        $('#upload').prop('disabled', false);
       }
+
     });
   });
 

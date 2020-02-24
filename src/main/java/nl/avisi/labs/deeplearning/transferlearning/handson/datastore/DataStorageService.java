@@ -1,11 +1,11 @@
-package nl.avisi.labs.deeplearning.transferlearning.handson.storage;
+package nl.avisi.labs.deeplearning.transferlearning.handson.datastore;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface StorageService {
+public interface DataStorageService {
 
     void init();
 

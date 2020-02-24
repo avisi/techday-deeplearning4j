@@ -1,4 +1,4 @@
-package nl.avisi.labs.deeplearning.transferlearning.handson.datahelpers;
+package nl.avisi.labs.deeplearning.transferlearning.handson.iterators;
 
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.InputSplit;

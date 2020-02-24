@@ -48,7 +48,10 @@ Tip: If you're lucky, you can grab a banana from the bar and use the camera of y
 In this second part we are going to train a network ourselves. During this part, you may want to use the docs from [here](https://deeplearning4j.org/docs/latest/) for further explanation about methods that were used.
 
 ### Setting up the dataset
-You can use one of the predefined datasets from: https://console.cloud.google.com/storage/browser/techday_feb2020/datasets Download one of the zip files and extract it.
+You can use one of the predefined datasets from: 
+
+``https://console.cloud.google.com/storage/browser/techday_feb2020/datasets`` 
+Download one of the zip files and extract it.
 Please choose a maximum of three different categories from the extracted folders. For example, three types of dogs from the Dogs dataset: chihuahua, beagle and pug. For adequate training about 50 images for each
 category will be sufficient. You can use more images, but this will cause the training time to be longer.
 

@@ -1,6 +1,6 @@
 package nl.avisi.labs.deeplearning.transferlearning.handson.starter;
 
-import nl.avisi.labs.deeplearning.transferlearning.handson.datahelpers.TransferLearningIterator;
+import nl.avisi.labs.deeplearning.transferlearning.handson.iterators.TransferLearningIterator;
 import nl.avisi.labs.deeplearning.transferlearning.handson.trainers.BaseTransferLearningTrainer;
 
 import org.deeplearning4j.eval.Evaluation;

@@ -1,4 +1,4 @@
-package nl.avisi.labs.deeplearning.transferlearning.handson.datahelpers;
+package nl.avisi.labs.deeplearning.transferlearning.handson.iterators;
 
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
@@ -77,7 +77,7 @@ public abstract class TransferLearningIterator {
         FileSplit filesInDir = new FileSplit(parentDir, allowedExtensions, rng);
         BalancedPathFilter pathFilter = new BalancedPathFilter(rng, allowedExtensions, labelMaker);
         if (trainPercentage >= 100) {
-            throw new IllegalArgumentException("Percentage of data set aside for training has to be less than 100%. Test percentage = 100 - training percentage, has to be greater than 0");
+            throw new IllegalArgumentException("Percentage of data set aside for training has to be less than 100%. Test percentage = 100 - training percentage and has to be greater than 0");
         }
         InputSplit[] filesInDirSplit = filesInDir.sample(pathFilter, trainPercentage, 100 - trainPercentage);
         //create the training data

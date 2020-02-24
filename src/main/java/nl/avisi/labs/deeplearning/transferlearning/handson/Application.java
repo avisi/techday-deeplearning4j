@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import nl.avisi.labs.deeplearning.transferlearning.handson.storage.StorageProperties;
-import nl.avisi.labs.deeplearning.transferlearning.handson.storage.StorageService;
+import nl.avisi.labs.deeplearning.transferlearning.handson.datastore.StorageProperties;
+import nl.avisi.labs.deeplearning.transferlearning.handson.datastore.DataStorageService;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
@@ -18,10 +18,10 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner init(StorageService storageService) {
+    CommandLineRunner init(DataStorageService dataStorageService) {
         return args -> {
-            storageService.deleteAll();
-            storageService.init();
+            dataStorageService.deleteAll();
+            dataStorageService.init();
         };
 
     }
