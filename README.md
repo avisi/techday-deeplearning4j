@@ -9,13 +9,25 @@ an error like:
 
 On a MacBook we used Java 11.0.3 with no such problem.
 
-## Setup of the project
+## Setup
 
-Execute the following steps to get the project up and running:
+Download the files 
+``https://console.cloud.google.com/storage/browser/_details/techday_feb2020/FruitModel.zip``
+and
+``https://console.cloud.google.com/storage/browser/_details/techday_feb2020/vgg16_dl4j_inference.zip en plaats deze in de folder techday-deeplearning4j/dl4j-models/models/vgg16``
+and place these files in the folder
+``dl4j-models/models/vgg16``
+
+For Gradle users:
+* Import the project as a Gradle Project.
+* Run ```./gradlew :clean :build``` 
+
+
+For Maven users:
 
 * Import the project as a Maven Project.
+* Run ``mvn clean install``
 
-* Run ````mvn clean install````
 
 ## Starter
 
@@ -23,10 +35,6 @@ Execute the following steps to get the project up and running:
 For the starter part we are going to run a fully trained network and we are going to experiment with it. \
 The fully trained network is able to make a distinction between bananas and no bananas. \ 
 
-Run the FruitModelTrainer to train the model. This results in a file called FruitModel.zip
-During training DL4J will report what the current values are for
-
-Precision 
  
 Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at http://localhost:8080. You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
