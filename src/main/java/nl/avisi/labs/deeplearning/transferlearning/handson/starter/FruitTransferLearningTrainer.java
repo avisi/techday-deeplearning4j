@@ -29,6 +29,7 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
     private static final int NUM_CLASSES = 2; //Banana / No_banana
     private static final int TRAIN_PERC = 80; // Percentage of images that should be included in the trainings set, the rest is included in the test set
     private static final int BATCH_SIZE = 5;
+    private static final int MAX_NUMBER_OF_ITERATIONS = 40;
 
     public static void main(String[] args) throws IOException {
         new FruitTransferLearningTrainer().train();
@@ -55,7 +56,7 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
                                                     .setFeatureExtractor("fc2") //the specified layer and below are "frozen"
                                                     // the other layers are trained
                                                     .removeVertexKeepConnections("predictions") //replace the functionality of the final layer
-                                                    .addLayer("predictions", this.createOutputLayer(), "fc2").build();
+                                                    .addLayer("predictions", outputLayer, "fc2").build();
             iterator = new FruitDataSetIterator(BATCH_SIZE, TRAIN_PERC);
             iterator.setup();
             DataSetIterator trainIter = iterator.getTrainIterator();
@@ -67,9 +68,7 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
 
             int iter = 0;
             while (trainIter.hasNext()) {
-
                 vgg16Transfer.fit(trainIter.next());
-
                 if (iter % 10 == 0) {
                     log.info("Evaluate model at iter " + iter + " ....");
                     eval = vgg16Transfer.evaluate(testIter);
@@ -77,6 +76,11 @@ public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
                     testIter.reset();
                 }
                 iter++;
+                if (!trainIter.hasNext() && iter < MAX_NUMBER_OF_ITERATIONS) {
+                    trainIter.reset();
+                } else if (iter == MAX_NUMBER_OF_ITERATIONS) {
+                    break;
+                }
             }
         }
 
