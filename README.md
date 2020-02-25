@@ -38,7 +38,7 @@ The fully trained network is able to make a distinction between bananas and no b
  
 Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at [http://localhost:8080](http://localhost:808). You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
-For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana? Is it the colour that is triggering the network?
+For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana? Is it the yellow that is triggering the network?
 Make some notes about your findings, so you can use them later on when we are going to discuss the results.
 
 Tip: If you're lucky, you can grab a banana from the bar and use the camera of your laptop!
