@@ -3,7 +3,6 @@ package nl.avisi.labs.deeplearning.transferlearning.handson.starter;
 import nl.avisi.labs.deeplearning.transferlearning.handson.iterators.TransferLearningIterator;
 import nl.avisi.labs.deeplearning.transferlearning.handson.trainers.BaseTransferLearningTrainer;
 
-import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.layers.Layer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.graph.ComputationGraph;
@@ -11,6 +10,7 @@ import org.deeplearning4j.nn.transferlearning.TransferLearning;
 import org.deeplearning4j.util.ModelSerializer;
 import org.deeplearning4j.zoo.ZooModel;
 import org.deeplearning4j.zoo.model.VGG16;
+import org.nd4j.evaluation.classification.Evaluation;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.slf4j.Logger;

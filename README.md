@@ -99,3 +99,36 @@ If you are able to succeed in the first two levels you can start thinking of you
 Search for images which you can use and execute the same steps as in the intermediate level for your new dataset. Instead of using the VGG-16 architecture as an alternative any of the [other zoo models](https://deeplearning4j.org/docs/latest/deeplearning4j-zoo-models) can be used
 e.g.
 - VGG-19
+
+
+##Background information
+
+Deep learning has two phases:
+- feature detection
+- classification
+
+We will use transfer learning i.e. we repurpose a network for our own use case. So instead of training a network from scratch we reuse a trained network and\\
+adapt it by replacing the classification layer(s) with our own layer(s). So for instance in stead of training a network to recognize 1000 categories we can remove the\\
+classification layer and add one layer which is used to recognize only 2 categories. By 'freezing' anything below the classification layers we only need to train the classification layers.
+Frozen layers are not updated during backpropagation.
+
+Our banana recognition network is based on the VGG-16 network. The last layer of the VGG-16 network has 1000 outgoing connections (as it can recognize 1000 classes). 
+For our banana recognition network we therefore replace the final layer with a custom layer which has only 2 outgoing connections as we have only two classes:
+- banana
+- no_banana
+
+The last-but-one layer of the VGG-16 network has 4096 outgoing connections. As a result the definition of the last layer will become:
+
+```
+        return new OutputLayer.Builder(NEGATIVELOGLIKELIHOOD)//
+                                                             .nIn(4096)
+                                                             .nOut(NUM_CLASSES)
+                                                             .weightInit(getDist())
+                                                             .activation(Activation.SOFTMAX)//
+                                                             .build();
+```
+The activation function SoftMax is used. This is recommended for classification purposes as it results in a probability distribution i.e. the sum of all
+scores in the output layer is 1 and all scores are in the interval [0,1> even for negative input values.
+
+The weights are initialized according to a Normal Distribution.
+
