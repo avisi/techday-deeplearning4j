@@ -13,8 +13,6 @@ On a MacBook we used Java 11.0.3 with no such problem.
 
 Execute the following steps to get the project up and running:
 
-* Import the project as a Maven Project.
-
 * Download the following to files (if you have not done this yet):
 - https://console.cloud.google.com/storage/browser/_details/techday_feb2020/vgg16_dl4j_inference.zip
 - https://console.cloud.google.com/storage/browser/_details/techday_feb2020/FruitModel.zip
@@ -40,7 +38,7 @@ The fully trained network is able to make a distinction between bananas and no b
  
 Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at [localhost](http://localhost:8081). You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
-For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana?
+For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana? Is it the colour that is triggering the network?
 Make some notes about your findings, so you can use them later on when we are going to discuss the results.
 
 Tip: If you're lucky, you can grab a banana from the bar and use the camera of your laptop!
@@ -79,8 +77,17 @@ While training you can keep track of the progress in the console and check the c
 ### Test your classifier
 Extend the [DataClassifier](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/DataClassifier.java) as a Spring Boot @Component and assign it a unique @Profile e.g. "helloWorld".
 Next run the application with "helloWorld" or the other profile you have set. Run the application from the Run Menu or alternatively execute the following command:
-```mvn spring-boot:run -Dspring.profiles.active=helloWorld```
 
+```
+export SPRING_PROFILES_ACTIVE=helloWorld
+```
+```
+mvn spring-boot:run -Dspring.profiles.active=helloWorld
+```
+or
+```
+./gradlew :bootRun
+```
 Experiment with your trained model by uploading some new pictures related to your dataset. Just like you did at the starter part.
 You may want to train your network again if it doesn't perform well. For example you can try to use more iterations for training. 
 
