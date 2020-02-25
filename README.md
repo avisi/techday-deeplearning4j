@@ -67,7 +67,7 @@ Implement the missing functionality inside the [BasicTrainer](src/main/java/nl/a
 In this trainer we will we use the existing VGG16 network and modify it. We will remove the classifier from it and append our new classifier for our dataset.
 
 You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/starter/FruitTransferLearningTrainer.java) as an example.
-Do not only copy the contents of the FruitTransferLearningTrainer. Try to find out what steps are taken. You may also have to modify one of the class variables.
+Do not only copy the contents of the FruitTransferLearningTrainer. Try to find out what steps are taken. You may also have to modify some of the class variables.
 
 ### Train your network
 When you finished implementing the transfer learning trainer you can start training by running the main function inside the BasicTrainer.
