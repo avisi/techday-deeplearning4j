@@ -36,9 +36,9 @@ For Maven users:
 For the starter part we are going to run a fully trained network and we are going to experiment with it. \
 The fully trained network is able to make a distinction between bananas and no bananas. 
  
-Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at [localhost](http://localhost:8081). You can upload images or use your laptop's camera.
+Run the application with the profile name "fruit" (Set this profile in the Run Configuration). Now, you will be able to access the trained classifier at [http://localhost:8080](http://localhost:808). You can upload images or use your laptop's camera.
 Experiment with the classifier and find out what features of a banana are used by the neural network to determine if we have a banana.
-For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana? Is it the colour that is triggering the network?
+For example: does the color matter or the curved shape? If we bent our hand, can we pretend that it is a banana? Is it the yellow that is triggering the network?
 Make some notes about your findings, so you can use them later on when we are going to discuss the results.
 
 Tip: If you're lucky, you can grab a banana from the bar and use the camera of your laptop!
@@ -67,7 +67,7 @@ Implement the missing functionality inside the [BasicTrainer](src/main/java/nl/a
 In this trainer we will we use the existing VGG16 network and modify it. We will remove the classifier from it and append our new classifier for our dataset.
 
 You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/starter/FruitTransferLearningTrainer.java) as an example.
-Do not only copy the contents of the FruitTransferLearningTrainer. Try to find out what steps are taken. You may also have to modify one of the class variables.
+Do not only copy the contents of the FruitTransferLearningTrainer. Try to find out what steps are taken. You may also have to modify some of the class variables.
 
 ### Train your network
 When you finished implementing the transfer learning trainer you can start training by running the main function inside the BasicTrainer.
