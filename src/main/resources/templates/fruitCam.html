@@ -48,8 +48,7 @@
                             <p th:text="${p.score}" style="color:black"></p>
                         </td>
                         <td height="80px" class="decision">
-                            <p th:if="${p.score &gt; 0.5}" th:text="${p.category + ' detected'}" style="color:black"></p>
-
+                            <p th:text="${p.category}" style="color:black"></p>
                         </td>
 
                     </tr>
@@ -88,8 +87,7 @@
                             <p th:text="${p.score}" style="color:black"></p>
                         </td>
                         <td height="80px" class="decision">
-                            <p th:if="${p.score &gt; 0.5}" th:text="${p.category + ' detected'}" style="color:black"></p>
-
+                            <p th:text="${p.category}" style="color:black"></p>
                         </td>
                     </tr>
 

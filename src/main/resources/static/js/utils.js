@@ -26,13 +26,13 @@ function Utils(errorOutputId) { // eslint-disable-line no-unused-vars
         let img = new Image();
         img.crossOrigin = 'anonymous';
         img.onload = function() {
-            canvas.width = 200;
-            canvas.height = 200*img.height/img.width;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.width = 640;
+            canvas.height = 640*img.height/img.width;
+            ctx.drawImage(img, 0, 0, 640, canvas.height);
         };
         img.src = url;
     };
-
+    
     this.executeCode = function(textAreaId) {
         try {
             this.clearError();
