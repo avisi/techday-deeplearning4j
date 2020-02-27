@@ -69,9 +69,17 @@ In this trainer we will we use the existing VGG16 network and modify it. We will
 You can use the [FruitTransferLearningTrainer](src/main/java/nl/avisi/labs/deeplearning/transferlearning/handson/starter/FruitTransferLearningTrainer.java) as an example.
 Do not only copy the contents of the FruitTransferLearningTrainer. Try to find out what steps are taken. You may also have to modify some of the class variables.
 
+
 ### Train your network
 When you finished implementing the transfer learning trainer you can start training by running the main function inside the BasicTrainer.
-While training you can keep track of the progress in the console and check the current scores of the network.
+While training you can keep track of the progress in the console and check the current scores of the network. The scores are 
+- precision (% correct predictions vs total predictions)
+- recall (% correct predictions vs overall true positive)
+- accuracy (how many times did we predict either true positive or true negative)
+
+Training a dataset of circa 50 images per class ought to take 5 minutes or so.
+
+After training the network configuration is saved as a zip file. This zip file will be used in the next stage.
  
 
 ### Test your classifier
