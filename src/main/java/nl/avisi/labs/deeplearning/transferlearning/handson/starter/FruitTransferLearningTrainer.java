@@ -18,11 +18,8 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.io.IOException;
 
-import groovy.util.logging.Log4j;
-
 import static org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD;
 
-@Log4j
 public class FruitTransferLearningTrainer extends BaseTransferLearningTrainer {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(FruitTransferLearningTrainer.class);
 

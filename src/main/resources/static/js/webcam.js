@@ -71,6 +71,56 @@ function uploadImage() {
   });
 }
 
+var handle;
+$('#tabs' ).tabs({
+  activate: function( event, ui ) {
+    console.log(ui);
+    console.log(ui.newTab.index());
+    if (ui.newTab.index() == 0) {
+      shutdownCamera();
+      clearTimeout(handle);
+      handle = null;
+    }
+    if (ui.newTab.index() == 1) {
+      getAccessToTheCamera();
+      handle = setTimeout(processVideo, 200);
+    }
+  },
+
+});
+$('#upload').on('click', function(){
+  $('#upload').prop('disabled', true);
+  var data = new FormData();
+  data.append('image', $('#file').prop('files')[0]);
+  let imgUrl = URL.createObjectURL($('#file').prop('files')[0]);
+  let utils = new Utils('errorContainer');
+  utils.loadImageToCanvas(imgUrl, 'fileCanvas');
+
+
+
+  $.ajax({
+    type: 'POST',
+    processData: false, // important
+    contentType: false, // important
+    data: data,
+    url: '/upload/file',
+    dataType : 'text',
+    success: function(predictions){
+      $('#filePredictions').html(predictions);
+      $('#upload').prop('disabled', false);
+    },
+    error: function(xhr, error){
+      console.log(xhr);
+      console.log(error);
+      $('#errorContainer').append(error);
+      $('#upload').prop('disabled', false);
+    }
+
+  });
+});
+
+
+
 
 
 

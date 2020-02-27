@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link href="styles.css" rel="stylesheet"/>
-    <link href="jquery-ui.min.css" rel="stylesheet"/>
-    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/avisi/opencv.js"></script>
-    <script type="text/javascript" src="/avisi/utils.js"></script>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery-ui.min.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/jquery-1.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/opencv.js}"></script>
+    <script type="text/javascript" th:src="@{/js/utils.js}"></script>
 </head>
 <body>
 <div id="container" >
@@ -18,15 +18,20 @@
         <div id="tabs-1">
                 <table>
                     <tr>
-                        <td>File to upload:</td>
-                        <td><input id="file" type="file" name="file"/></td>
+                        <td>File to upload
+                        <input id="file" type="file" name="file"/></td>
+                        <td/>
                     </tr>
                     <tr>
-                        <td></td>
                         <td><input id="upload" type="submit" value="Upload"/></td>
+                        <td/>
+                    </tr>
+                    <tr>
+                        <td/>
                         <td>
-                            <canvas id="fileCanvas" width="320" height="240"></canvas>
+                            <canvas id="fileCanvas" width="640" height="480"></canvas>
                         </td>
+                        <td/>
                     </tr>
                 </table>
             <div id="filePredictions" class="predictions" th:fragment="filePredictions">
@@ -45,10 +50,6 @@
                         <td height="80px" class="decision">
                             <p th:if="${p.score &gt; 0.5}" th:text="${p.category + ' detected'}" style="color:black"></p>
 
-                        </td>
-                        <td height="80">
-                            <img th:if="${p.score &gt; 0.8 and !#strings.contains(p.category, 'no_')}" src="alarm.gif"
-                                 style="max-height: 80px"/>
                         </td>
 
                     </tr>
@@ -90,10 +91,6 @@
                             <p th:if="${p.score &gt; 0.5}" th:text="${p.category + ' detected'}" style="color:black"></p>
 
                         </td>
-                        <td height="80">
-                            <img th:if="${p.score &gt; 0.8 and !#strings.contains(p.category, 'no_')}" src="alarm.gif"
-                                 style="max-height: 80px"/>
-                        </td>
                     </tr>
 
 
@@ -105,56 +102,8 @@
 
 </div>
 
-<script type="text/javascript" th:src="@{/avisi/webcam.js}"/>
+<script type="text/javascript" th:src="@{/js/webcam.js}"/>
 <script type="text/javascript" >
-    var handle;
-  $('#tabs' ).tabs({
-    activate: function( event, ui ) {
-      console.log(ui);
-      console.log(ui.newTab.index());
-      if (ui.newTab.index() == 0) {
-        shutdownCamera();
-        clearTimeout(handle);
-        handle = null;
-      }
-      if (ui.newTab.index() == 1) {
-        getAccessToTheCamera();
-        handle = setTimeout(processVideo, 200);
-      }
-    },
-
-  });
-  $('#upload').on('click', function(){
-    $('#upload').prop('disabled', true);
-    var data = new FormData();
-    data.append('image', $('#file').prop('files')[0]);
-      let imgUrl = URL.createObjectURL($('#file').prop('files')[0]);
-      let utils = new Utils('errorContainer');
-      utils.loadImageToCanvas(imgUrl, 'fileCanvas');
-
-
-
-    $.ajax({
-      type: 'POST',
-      processData: false, // important
-      contentType: false, // important
-      data: data,
-      url: '/upload/file',
-      dataType : 'text',
-      success: function(predictions){
-        $('#filePredictions').html(predictions);
-        $('#upload').prop('disabled', false);
-      },
-      error: function(xhr, error){
-        console.log(xhr);
-        console.log(error);
-        $('#errorContainer').append(error);
-        $('#upload').prop('disabled', false);
-      }
-
-    });
-  });
-
 </script>
 </body>
 </html>
